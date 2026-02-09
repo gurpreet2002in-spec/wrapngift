@@ -12,6 +12,8 @@ export default {
                 accent: "rgb(var(--color-accent) / <alpha-value>)",
                 pearl: "rgb(var(--color-pearl) / <alpha-value>)",
                 champagne: "rgb(var(--color-champagne) / <alpha-value>)",
+                royalty: "rgb(var(--color-royalty) / <alpha-value>)",
+                highlight: "rgb(var(--color-highlight) / <alpha-value>)",
                 background: "rgb(var(--color-background) / <alpha-value>)",
                 text: {
                     DEFAULT: "rgb(var(--color-text) / <alpha-value>)",

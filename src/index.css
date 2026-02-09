@@ -18,6 +18,10 @@
     /* #F9F9F7 - Expensive White */
     --color-champagne: 242 233 225;
     /* #F2E9E1 - Tonal Warmth */
+    --color-royalty: var(--color-secondary);
+    /* Deep Midnight Teal #19373C */
+    --color-highlight: var(--color-accent);
+    /* Elegant Gold #B89257 */
 
     --color-background: var(--color-pearl);
     --color-text: 28 34 35;

@@ -5,6 +5,7 @@ import Home from './pages/Home';
 import CategoryPage from './pages/CategoryPage';
 import ProductDetailPage from './pages/ProductDetailPage';
 import AboutUs from './pages/AboutUs';
+import Gallery from './pages/Gallery';
 import AdminDashboard from './pages/Admin/Dashboard';
 import Footer from './components/Layout/Footer';
 import { GiftingProvider } from './context/GiftingContext';
@@ -24,6 +25,7 @@ function App() {
                             <Route path="/about" element={<AboutUs />} />
                             <Route path="/category/:categoryId" element={<CategoryPage />} />
                             <Route path="/product/:productId" element={<ProductDetailPage />} />
+                            <Route path="/gallery" element={<Gallery />} />
                             <Route path="/admin" element={<AdminDashboard />} />
                         </Routes>
                     </main>
