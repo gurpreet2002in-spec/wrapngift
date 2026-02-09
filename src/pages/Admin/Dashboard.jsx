@@ -98,6 +98,10 @@ const AdminDashboard = () => {
         if (editedProduct.image !== original.image) {
             updateProduct(selectedCategory, editingProductId, 'image', editedProduct.image);
         }
+        if (editedProduct.category_id && editedProduct.category_id !== selectedCategory) {
+            updateProduct(selectedCategory, editingProductId, 'category_id', editedProduct.category_id);
+            setSelectedCategory(editedProduct.category_id); // Switch view to new category
+        }
 
         setEditingProductId(null);
         setEditedProduct({});
@@ -270,11 +274,23 @@ const AdminDashboard = () => {
                                                             <input type="text" value={editedProduct.title} onChange={(e) => setEditedProduct({ ...editedProduct, title: e.target.value })} className="border p-2 rounded outline-none focus:border-primary" placeholder="Product Name" />
                                                             <input type="text" value={editedProduct.price} onChange={(e) => setEditedProduct({ ...editedProduct, price: e.target.value })} className="border p-2 rounded outline-none focus:border-primary" placeholder="Price" />
                                                         </div>
+                                                        <div>
+                                                            <label className="block text-[10px] uppercase tracking-widest text-gray-400 mb-1 font-bold">Category</label>
+                                                            <select
+                                                                value={editedProduct.category_id || selectedCategory}
+                                                                onChange={(e) => setEditedProduct({ ...editedProduct, category_id: e.target.value })}
+                                                                className="w-full border p-2 rounded outline-none focus:border-primary text-sm"
+                                                            >
+                                                                {Object.values(categories).map(cat => (
+                                                                    <option key={cat.id} value={cat.id}>{cat.title}</option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
                                                         <textarea value={editedProduct.description} onChange={(e) => setEditedProduct({ ...editedProduct, description: e.target.value })} className="w-full border p-2 rounded outline-none focus:border-primary" placeholder="Product Description" rows="3" />
                                                         <ImageUpload currentImage={editedProduct.image} onImageUploaded={(url) => setEditedProduct({ ...editedProduct, image: url })} label="Product Image" />
                                                         <div className="flex gap-2 justify-end">
-                                                            <button onClick={saveProductChanges} className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded text-sm"><Save size={16} /> Save</button>
-                                                            <button onClick={cancelEditingProduct} className="flex items-center gap-2 bg-gray-400 text-white px-4 py-2 rounded text-sm"><X size={16} /> Cancel</button>
+                                                            <button onClick={saveProductChanges} className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded text-sm font-bold uppercase tracking-widest text-[10px]"><Save size={14} /> Save Changes</button>
+                                                            <button onClick={cancelEditingProduct} className="flex items-center gap-2 bg-gray-400 text-white px-4 py-2 rounded text-sm font-bold uppercase tracking-widest text-[10px]"><X size={14} /> Cancel</button>
                                                         </div>
                                                     </div>
                                                 ) : (
@@ -296,7 +312,15 @@ const AdminDashboard = () => {
 
                                     {/* Add New Product Form */}
                                     <div className="bg-pearl p-6 rounded-2xl border-2 border-dashed border-gray-200">
-                                        <h4 className="font-bold text-primary mb-4 flex items-center gap-2 uppercase tracking-widest text-xs"><Plus size={16} /> Add New Product</h4>
+                                        <div className="flex justify-between items-start mb-6 border-b border-gray-100 pb-4">
+                                            <div>
+                                                <h4 className="font-bold text-primary flex items-center gap-2 uppercase tracking-widest text-xs"><Plus size={16} /> Add New Product</h4>
+                                                <p className="text-[10px] text-gray-400 uppercase tracking-widest mt-1">To collection: <span className="text-primary font-bold">{currentCategory.title}</span></p>
+                                            </div>
+                                            <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-[9px] font-bold uppercase tracking-widest">
+                                                Contextual Add
+                                            </div>
+                                        </div>
                                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                             <input type="text" placeholder="Product Name" className="border p-2 rounded outline-none" value={newProduct.title} onChange={e => setNewProduct({ ...newProduct, title: e.target.value })} />
                                             <input type="text" placeholder="Price (e.g. ₹2,500)" className="border p-2 rounded outline-none" value={newProduct.price} onChange={e => setNewProduct({ ...newProduct, price: e.target.value })} />

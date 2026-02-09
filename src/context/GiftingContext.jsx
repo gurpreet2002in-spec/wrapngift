@@ -121,16 +121,35 @@ export const GiftingProvider = ({ children }) => {
     };
 
     const updateProduct = async (categoryId, productId, field, value) => {
-        // Optimistic Update
-        setCategories(prev => ({
-            ...prev,
-            [categoryId]: {
-                ...prev[categoryId],
-                products: prev[categoryId].products.map(p =>
-                    p.id === productId ? { ...p, [field]: value } : p
-                )
-            }
-        }));
+        // Handle Moving Product to another category
+        if (field === 'category_id' && value !== categoryId) {
+            const productToMove = categories[categoryId].products.find(p => p.id === productId);
+            if (!productToMove) return;
+
+            // Optimistic Update: Move in state
+            setCategories(prev => ({
+                ...prev,
+                [categoryId]: {
+                    ...prev[categoryId],
+                    products: prev[categoryId].products.filter(p => p.id !== productId)
+                },
+                [value]: {
+                    ...prev[value],
+                    products: [...prev[value].products, { ...productToMove, category_id: value }]
+                }
+            }));
+        } else {
+            // Normal Optimistic Update
+            setCategories(prev => ({
+                ...prev,
+                [categoryId]: {
+                    ...prev[categoryId],
+                    products: prev[categoryId].products.map(p =>
+                        p.id === productId ? { ...p, [field]: value } : p
+                    )
+                }
+            }));
+        }
 
         try {
             const { error } = await supabase
@@ -141,7 +160,7 @@ export const GiftingProvider = ({ children }) => {
             if (error) throw error;
         } catch (error) {
             console.error("Failed to update product:", error);
-            fetchCategories();
+            fetchCategories(); // Revert on error
         }
     };
 
