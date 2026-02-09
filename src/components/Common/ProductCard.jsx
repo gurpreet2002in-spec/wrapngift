@@ -9,15 +9,8 @@ const ProductCard = ({ product, categoryId }) => {
         e.preventDefault();
         e.stopPropagation();
         // Redirect to home page contact section with product info in state or query
-        navigate('/', { state: { prefillInquiry: `Interested in: ${product.title}` } });
-
-        // Use a timeout to ensure navigation happens first, then scroll to contact
-        setTimeout(() => {
-            const contactSection = document.getElementById('contact');
-            if (contactSection) {
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        }, 100);
+        // Redirect to home page contact section with product info in state
+        navigate('/#contact', { state: { prefillInquiry: `Interested in: ${product.title}` } });
     };
 
     return (
@@ -81,16 +74,16 @@ const ProductCard = ({ product, categoryId }) => {
                         {product.price}
                     </p>
 
-                    <div className="grid grid-cols-2 gap-4 pt-4">
+                    <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-4">
                         <Link
                             to={`/product/${product.id}`}
-                            className="bg-white text-royalty uppercase tracking-[0.2em] text-[10px] font-bold py-4 px-2 rounded-full hover:bg-highlight hover:text-white transition-all duration-500 shadow-xl shadow-black/20 text-center flex items-center justify-center"
+                            className="bg-white text-royalty uppercase tracking-[0.1em] sm:tracking-[0.2em] text-[9px] sm:text-[10px] font-bold py-4 px-1 sm:px-2 rounded-full hover:bg-highlight hover:text-white transition-all duration-500 shadow-xl shadow-black/20 text-center flex items-center justify-center whitespace-nowrap"
                         >
                             View Details
                         </Link>
                         <button
                             onClick={handleInquiry}
-                            className="bg-highlight text-white uppercase tracking-[0.2em] text-[10px] font-bold py-4 px-2 rounded-full hover:bg-white hover:text-royalty transition-all duration-500 shadow-xl shadow-black/20 text-center flex items-center justify-center"
+                            className="bg-highlight text-white uppercase tracking-[0.1em] sm:tracking-[0.2em] text-[9px] sm:text-[10px] font-bold py-4 px-1 sm:px-2 rounded-full hover:bg-white hover:text-royalty transition-all duration-500 shadow-xl shadow-black/20 text-center flex items-center justify-center whitespace-nowrap"
                         >
                             Enquiry
                         </button>

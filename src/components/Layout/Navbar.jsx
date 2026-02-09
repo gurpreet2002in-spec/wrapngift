@@ -27,7 +27,7 @@ const Navbar = () => {
 
     return (
         <nav className={`fixed w-full z-50 transition-all duration-300 bg-white shadow-sm py-2`}>
-            <div className="container mx-auto px-6 flex justify-between items-center relative h-16">
+            <div className="container mx-auto px-6 flex justify-end lg:justify-between items-center relative h-16">
 
                 {/* Left: Overlapping Round Logo */}
                 <Link to="/" className="absolute left-6 top-0 z-50 transform translate-y-1">
@@ -35,7 +35,7 @@ const Navbar = () => {
                         <img
                             src="/logo.jpg"
                             alt="Wrap n Pack"
-                            className="h-20 w-20 md:h-24 md:w-24 object-contain rounded-full"
+                            className="h-14 w-14 md:h-24 md:w-24 object-contain rounded-full"
                         />
                     </div>
                 </Link>
@@ -70,7 +70,7 @@ const Navbar = () => {
                     </div>
 
                     <Link to="/gallery" className="text-[12px] font-bold tracking-[0.15em] uppercase text-secondary hover:text-primary transition-colors">Gallery</Link>
-                    <a href="/#contact" className="text-[12px] font-bold tracking-[0.15em] uppercase text-secondary hover:text-primary transition-colors">Contact Us</a>
+                    <Link to="/#contact" className="text-[12px] font-bold tracking-[0.15em] uppercase text-secondary hover:text-primary transition-colors">Contact Us</Link>
                 </div>
 
                 {/* Right: Contact Info & Action Icons */}
@@ -115,7 +115,7 @@ const Navbar = () => {
                     </div>
 
                     <Link to="/gallery" className="text-secondary hover:text-primary uppercase tracking-widest text-[12px] font-bold" onClick={() => setIsOpen(false)}>Gallery</Link>
-                    <a href="/#contact" className="text-secondary hover:text-primary uppercase tracking-widest text-[12px] font-bold" onClick={() => setIsOpen(false)}>Contact Us</a>
+                    <Link to="/#contact" className="text-secondary hover:text-primary uppercase tracking-widest text-[12px] font-bold" onClick={() => setIsOpen(false)}>Contact Us</Link>
                 </div>
             )}
         </nav>

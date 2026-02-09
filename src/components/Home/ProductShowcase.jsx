@@ -29,7 +29,6 @@ const ProductShowcase = () => {
             <CategorySection
                 {...categories.baby}
                 background="bg-pink-50/50"
-                align="center"
             />
         </>
     );
