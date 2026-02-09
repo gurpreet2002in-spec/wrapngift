@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Luxury Gifting Palette: Pearl, Champagne & Midnight */
+    --color-primary: 90 178 187;
+    /* Teal #5AB2BB */
+    --color-secondary: 25 55 60;
+    /* Deep Midnight Teal #19373C */
+    --color-accent: 184 146 87;
+    /* Elegant Gold #B89257 */
+
+    --color-pearl: 249 249 247;
+    /* #F9F9F7 - Expensive White */
+    --color-champagne: 242 233 225;
+    /* #F2E9E1 - Tonal Warmth */
+
+    --color-background: var(--color-pearl);
+    --color-text: 28 34 35;
+    /* Soft Midnight Charcoal */
+    --color-text-light: 100 116 120;
+  }
+
+  body {
+    @apply bg-background text-text antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+    overflow-x: hidden;
+    /* Subtle Paper Texture */
+    background-image: url("https://www.transparenttextures.com/patterns/natural-paper.png");
+  }
+
+  .glass-card {
+    @apply bg-white/70 backdrop-blur-md border border-white/40 shadow-xl;
+  }
+
+  .mesh-gradient-pearl {
+    background: radial-gradient(at 0% 0%, rgba(90, 178, 187, 0.05) 0px, transparent 50%),
+      radial-gradient(at 100% 0%, rgba(184, 146, 87, 0.08) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(90, 178, 187, 0.05) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(184, 146, 87, 0.08) 0px, transparent 50%);
+    background-color: var(--color-pearl);
+  }
+
+  .mesh-gradient-midnight {
+    background: radial-gradient(at 0% 0%, rgba(90, 178, 187, 0.15) 0px, transparent 50%),
+      radial-gradient(at 100% 100%, rgba(184, 146, 87, 0.1) 0px, transparent 50%);
+    background-color: var(--color-secondary);
+  }
+
+  .text-glow {
+    text-shadow: 0 0 20px rgba(90, 178, 187, 0.3);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif;
+  }
+}

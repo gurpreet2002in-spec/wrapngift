@@ -1,0 +1,184 @@
+{
+  "categories": [
+    {
+      "id": "corporate",
+      "title": "Corporate Gifting",
+      "subtitle": "Professional Excellence",
+      "description": "Elevate your brand with premium, customized corporate hampers. Perfect for clients, employees, and events.",
+      "banner": "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop",
+      "products": [
+        {
+          "id": 1,
+          "title": "Executive Leather Box",
+          "price": "₹3,500",
+          "image": "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop"
+        },
+        {
+          "id": 2,
+          "title": "Gourmet Selection",
+          "price": "₹2,800",
+          "image": "https://images.unsplash.com/photo-1512909006721-3d6018887383?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 3,
+          "title": "Tech & Utility Kit",
+          "price": "₹1,500",
+          "image": "https://images.unsplash.com/photo-1550005809-91a759055259?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 4,
+          "title": "Coffee Connoisseur",
+          "price": "₹2,200",
+          "image": "https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 5,
+          "title": "Wellness Hamper",
+          "price": "₹3,000",
+          "image": "https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 6,
+          "title": "Desktop Essentials",
+          "price": "₹1,800",
+          "image": "https://images.unsplash.com/photo-1491975474562-1f4e30bc9468?auto=format&fit=crop&q=80&w=1000"
+        }
+      ]
+    },
+    {
+      "id": "wedding",
+      "title": "Wedding Trousseau",
+      "subtitle": "A Love Story",
+      "description": "Elegant packing for the most special day of your life. Trousseau trunks, invite hampers, and room gifts crafted with perfection.",
+      "banner": "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=1000",
+      "products": [
+        {
+          "id": 1,
+          "title": "Royal Trousseau Trunk",
+          "price": "Custom",
+          "image": "https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 2,
+          "title": "Floral Invite Box",
+          "price": "Custom",
+          "image": "https://images.unsplash.com/photo-1522771930-78848d9293e8?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 3,
+          "title": "Couple's Spa Hamper",
+          "price": "Custom",
+          "image": "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 4,
+          "title": "Heritage Sweet Box",
+          "price": "Custom",
+          "image": "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?auto=format&fit=crop&q=80&w=2070&auto=format&fit=crop"
+        },
+        {
+          "id": 5,
+          "title": "Bride's Essentials",
+          "price": "Custom",
+          "image": "https://images.unsplash.com/photo-1525268323814-8780a1cff6e9?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 6,
+          "title": "Groom's Grooming Kit",
+          "price": "Custom",
+          "image": "https://images.unsplash.com/photo-1621600411688-4be93cd68504?auto=format&fit=crop&q=80&w=1000"
+        }
+      ]
+    },
+    {
+      "id": "social",
+      "title": "Festive & Social",
+      "subtitle": "Celebrate Life",
+      "description": "Thoughtful gifts for every occasion—Diwali, Christmas, Housewarming, and Birthdays. Spread joy with our festive collection.",
+      "banner": "https://images.unsplash.com/photo-1512909006721-3d6018887383?auto=format&fit=crop&q=80&w=1000",
+      "products": [
+        {
+          "id": 1,
+          "title": "Diwali Gold Hamper",
+          "price": "₹4,000",
+          "image": "https://images.unsplash.com/photo-1512909006721-3d6018887383?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 2,
+          "title": "Housewarming Delight",
+          "price": "₹3,200",
+          "image": "https://images.unsplash.com/photo-1484156885344-93dd3cbdf449?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 3,
+          "title": "Tea Time Luxe",
+          "price": "₹2,100",
+          "image": "https://images.unsplash.com/photo-1550955295-a2268753239a?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 4,
+          "title": "Celebration Basket",
+          "price": "₹5,500",
+          "image": "https://images.unsplash.com/photo-1563245372-f21727329f6d?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 5,
+          "title": "Chocolate Indulgence",
+          "price": "₹2,500",
+          "image": "https://images.unsplash.com/photo-1481391319762-47dff72954d9?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 6,
+          "title": "Dry Fruit Box",
+          "price": "₹1,800",
+          "image": "https://images.unsplash.com/photo-1596522354195-e84e941e6d98?auto=format&fit=crop&q=80&w=1000"
+        }
+      ]
+    },
+    {
+      "id": "baby",
+      "title": "Baby Announcements Category",
+      "subtitle": "Little Miracles",
+      "description": "Welcome the little one with our adorable baby hampers. Perfect for announcements, baby showers, and first birthdays.",
+      "banner": "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&q=80&w=1000",
+      "products": [
+        {
+          "id": 1,
+          "title": "Welcome Baby (Blue)",
+          "price": "Custom",
+          "image": "https://images.unsplash.com/photo-1596207123985-78c2e6f4770d?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 2,
+          "title": "Welcome Baby (Pink)",
+          "price": "Custom",
+          "image": "https://images.unsplash.com/photo-1519689680058-324335c77eba?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 3,
+          "title": "Soft Toy Hamper",
+          "price": "₹2,500",
+          "image": "https://images.unsplash.com/photo-1555529771-835f59e65e80?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 4,
+          "title": "First Year Memory Box",
+          "price": "₹3,000",
+          "image": "https://images.unsplash.com/photo-1606103920295-9a091573f160?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 5,
+          "title": "Organic Cotton Set",
+          "price": "₹3,500",
+          "image": "https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?auto=format&fit=crop&q=80&w=1000"
+        },
+        {
+          "id": 6,
+          "title": "Baby Bath Essentials",
+          "price": "₹2,200",
+          "image": "https://images.unsplash.com/photo-1556228149-d8f635694f81?auto=format&fit=crop&q=80&w=1000"
+        }
+      ]
+    }
+  ]
+}
