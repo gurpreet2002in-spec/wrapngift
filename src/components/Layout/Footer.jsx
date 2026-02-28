@@ -68,15 +68,21 @@ const Footer = () => {
 
                         {/* Social Icons - Round with subtle border */}
                         <div className="flex space-x-4">
-                            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-accent hover:border-accent hover:text-secondary transition-all">
-                                <Facebook size={20} />
-                            </a>
-                            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-accent hover:border-accent hover:text-secondary transition-all">
-                                <Instagram size={20} />
-                            </a>
-                            <a href="#" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-accent hover:border-accent hover:text-secondary transition-all">
-                                <Linkedin size={20} />
-                            </a>
+                            {content.social_facebook && (
+                                <a href={content.social_facebook} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-accent hover:border-accent hover:text-secondary transition-all">
+                                    <Facebook size={20} />
+                                </a>
+                            )}
+                            {content.social_instagram && (
+                                <a href={content.social_instagram} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-accent hover:border-accent hover:text-secondary transition-all">
+                                    <Instagram size={20} />
+                                </a>
+                            )}
+                            {content.social_linkedin && (
+                                <a href={content.social_linkedin} target="_blank" rel="noopener noreferrer" className="w-10 h-10 flex items-center justify-center rounded-full bg-white/5 border border-white/10 text-white hover:bg-accent hover:border-accent hover:text-secondary transition-all">
+                                    <Linkedin size={20} />
+                                </a>
+                            )}
                         </div>
                     </div>
                 </div>

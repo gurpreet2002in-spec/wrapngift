@@ -361,11 +361,19 @@ const SiteContentTab = () => {
             </SectionCard>
 
             {/* ── Contact ── */}
-            <SectionCard title="Contact Information" icon={Phone} accent="border-t-4 border-teal-500" defaultOpen={false}>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <SectionCard title="Contact Information & Social Links" icon={Phone} accent="border-t-4 border-teal-500" defaultOpen={false}>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <ContentField label="WhatsApp Number" contentKey="contact_whatsapp" {...fieldProps} />
                     <ContentField label="Email Address" contentKey="contact_email" {...fieldProps} />
                     <ContentField label="Business Address" contentKey="contact_address" {...fieldProps} />
+                </div>
+                <div className="border-t border-gray-100 pt-5">
+                    <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-4">Social Media URLs</p>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <ContentField label="Instagram URL" contentKey="social_instagram" {...fieldProps} />
+                        <ContentField label="Facebook URL" contentKey="social_facebook" {...fieldProps} />
+                        <ContentField label="LinkedIn URL" contentKey="social_linkedin" {...fieldProps} />
+                    </div>
                 </div>
             </SectionCard>
         </div>

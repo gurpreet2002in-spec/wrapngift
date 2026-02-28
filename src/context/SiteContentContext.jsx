@@ -62,10 +62,13 @@ const DEFAULTS = {
         { number: '4.9/5', label: 'Average Rating' },
     ],
 
-    // Contact
+    // Contact & Social
     contact_whatsapp: '7588900505',
     contact_email: 'wrapnpack@gmail.com',
     contact_address: 'Pune, Maharashtra, India',
+    social_instagram: 'https://instagram.com',
+    social_facebook: 'https://facebook.com',
+    social_linkedin: 'https://linkedin.com',
 };
 
 export const SiteContentProvider = ({ children }) => {
@@ -180,6 +183,6 @@ function getSection(key) {
     if (key.startsWith('services_')) return 'services';
     if (key.startsWith('aboutpage_')) return 'about_page';
     if (key === 'stats') return 'stats';
-    if (key.startsWith('contact_')) return 'contact';
+    if (key.startsWith('contact_') || key.startsWith('social_')) return 'contact';
     return 'general';
 }
