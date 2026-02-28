@@ -100,7 +100,7 @@ export const AuthProvider = ({ children }) => {
 
         await supabase.from('site_content').upsert({
             key: 'admin_profile',
-            value: newProfile,
+            value: newProfile, // Objects are handled natively by supabase-js for jsonb
             section: 'admin',
             updated_at: new Date().toISOString()
         }, { onConflict: 'key' });
@@ -113,7 +113,8 @@ export const AuthProvider = ({ children }) => {
 
         await supabase.from('site_content').upsert({
             key: 'admin_password',
-            value: newPassword,
+            // primitive strings must be explicitly stringified for jsonb columns in standard supabase
+            value: JSON.stringify(newPassword),
             section: 'admin',
             updated_at: new Date().toISOString()
         }, { onConflict: 'key' });
