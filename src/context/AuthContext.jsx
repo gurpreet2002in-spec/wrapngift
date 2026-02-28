@@ -46,20 +46,44 @@ export const AuthProvider = ({ children }) => {
         fetchAdminSettings();
     }, []);
 
-    const login = (email, password) => {
-        const storedEmail = adminProfile.email;
+    const login = async (email, password) => {
+        try {
+            // Fetch the very latest credentials from the database to avoid stale local state issues
+            const { data, error } = await supabase
+                .from('site_content')
+                .select('key, value')
+                .in('key', ['admin_profile', 'admin_password']);
 
-        if ((email === storedEmail || email === 'admin@wrapngift.com') && password === globalPassword) {
-            setIsAuthenticated(true);
-            localStorage.setItem('wrapngift_admin_auth', 'true');
-            return { success: true };
-        }
+            let currentPassword = globalPassword;
+            let currentEmail = adminProfile.email;
 
-        // Fallback for local dev
-        if (password === globalPassword) {
-            setIsAuthenticated(true);
-            localStorage.setItem('wrapngift_admin_auth', 'true');
-            return { success: true };
+            if (data && !error) {
+                const profileRow = data.find(d => d.key === 'admin_profile');
+                if (profileRow && profileRow.value && profileRow.value.email) {
+                    currentEmail = profileRow.value.email;
+                    setAdminProfile(profileRow.value);
+                }
+                const passRow = data.find(d => d.key === 'admin_password');
+                if (passRow && passRow.value) {
+                    currentPassword = passRow.value;
+                    setGlobalPassword(passRow.value);
+                }
+            }
+
+            if ((email === currentEmail || email === 'admin@wrapngift.com') && password === currentPassword) {
+                setIsAuthenticated(true);
+                localStorage.setItem('wrapngift_admin_auth', 'true');
+                return { success: true };
+            }
+
+            // Fallback for local dev
+            if (password === currentPassword) {
+                setIsAuthenticated(true);
+                localStorage.setItem('wrapngift_admin_auth', 'true');
+                return { success: true };
+            }
+        } catch (err) {
+            console.error("Login verification failed", err);
         }
 
         return { success: false, error: 'Invalid credentials.' };

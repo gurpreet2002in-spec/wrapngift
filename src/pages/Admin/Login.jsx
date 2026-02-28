@@ -24,14 +24,11 @@ const AdminLogin = () => {
         setSuccessMessage('');
         setLoading(true);
 
-        // Simulate network request
-        setTimeout(() => {
-            const res = login(email, password);
-            if (!res.success) {
-                setError(res.error);
-                setLoading(false);
-            }
-        }, 1000);
+        const res = await login(email, password);
+        if (!res.success) {
+            setError(res.error);
+            setLoading(false);
+        }
     };
 
     const handleForgotEmailSubmit = (e) => {
