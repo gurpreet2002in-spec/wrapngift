@@ -3,7 +3,7 @@ import { useGifting } from '../../context/GiftingContext';
 import { useSiteContent } from '../../context/SiteContentContext';
 import {
     Plus, Trash2, Edit2, Save, X, Image as ImageIcon,
-    Layout, Gift, Info, Star, BarChart2, Phone, ChevronDown, ChevronUp, CheckCircle, AlertCircle, Loader, User, LogOut
+    Layout, Gift, Info, Star, BarChart2, Phone, ChevronDown, ChevronUp, CheckCircle, AlertCircle, Loader, User, LogOut, ShieldCheck, Lock
 } from 'lucide-react';
 import ImageUpload from '../../components/ImageUpload';
 import { PromotionalManager } from './PromotionalManager';
@@ -375,7 +375,7 @@ const SiteContentTab = () => {
 // ─── Main Admin Dashboard ─────────────────────────────────────────────────────
 
 const AdminDashboard = () => {
-    const { isAuthenticated, adminProfile, updateProfile, logout } = useAuth();
+    const { isAuthenticated, adminProfile, updateProfile, updatePassword, logout } = useAuth();
 
     const {
         categories, updateCategory, addCategory, deleteCategory,
@@ -399,6 +399,12 @@ const AdminDashboard = () => {
     // Profile State
     const [profileForm, setProfileForm] = useState(adminProfile);
     const [profileSaveStatus, setProfileSaveStatus] = useState(false);
+
+    // Password State
+    const [passwordForm, setPasswordForm] = useState({ newPassword: '', confirmPassword: '' });
+    const [passwordMessage, setPasswordMessage] = useState({ text: '', type: '' });
+    const [otpStep, setOtpStep] = useState(false);
+    const [otpCode, setOtpCode] = useState('');
 
     // Testimonial State
     const [isAddingTestimonial, setIsAddingTestimonial] = useState(false);
@@ -487,6 +493,38 @@ const AdminDashboard = () => {
         setProfileSaveStatus(true);
         updateProfile(profileForm);
         setTimeout(() => setProfileSaveStatus(false), 2000);
+    };
+
+    const handlePasswordSubmit = (e) => {
+        e.preventDefault();
+        if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+            setPasswordMessage({ text: 'Passwords do not match.', type: 'error' });
+            return;
+        }
+        if (passwordForm.newPassword.length < 6) {
+            setPasswordMessage({ text: 'Password must be at least 6 characters.', type: 'error' });
+            return;
+        }
+
+        // Switch to OTP step
+        setOtpStep(true);
+        setPasswordMessage({ text: 'A verification code has been sent to your email. (Demo code: 123456)', type: 'success' });
+    };
+
+    const handleOtpSubmit = (e) => {
+        e.preventDefault();
+        if (otpCode !== '123456') {
+            setPasswordMessage({ text: 'Invalid verification code.', type: 'error' });
+            return;
+        }
+
+        updatePassword(passwordForm.newPassword);
+        setPasswordMessage({ text: 'Password updated successfully!', type: 'success' });
+        setPasswordForm({ newPassword: '', confirmPassword: '' });
+        setOtpStep(false);
+        setOtpCode('');
+
+        setTimeout(() => setPasswordMessage({ text: '', type: '' }), 3000);
     };
 
     const currentCategory = categories[selectedCategory];
@@ -803,6 +841,89 @@ const AdminDashboard = () => {
                                             {profileSaveStatus && <span className="text-green-500 font-bold uppercase tracking-widest text-[10px] flex items-center gap-1"><CheckCircle size={14} /> Saved Successfully!</span>}
                                         </div>
                                     </form>
+
+                                    {otpStep ? (
+                                        <form onSubmit={handleOtpSubmit} className="mt-10 space-y-6 pt-10 border-t border-gray-100">
+                                            <h3 className="text-lg font-serif text-gray-800 flex items-center gap-2">
+                                                Verify Email / SMS
+                                            </h3>
+                                            {passwordMessage.text && (
+                                                <div className={`p-3 rounded-lg text-xs font-bold uppercase tracking-widest flex items-center gap-2 ${passwordMessage.type === 'error' ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}`}>
+                                                    {passwordMessage.type === 'error' ? <AlertCircle size={14} /> : <CheckCircle size={14} />}
+                                                    {passwordMessage.text}
+                                                </div>
+                                            )}
+                                            <div>
+                                                <FieldLabel>Verification Code</FieldLabel>
+                                                <input
+                                                    type="text"
+                                                    value={otpCode}
+                                                    onChange={e => setOtpCode(e.target.value)}
+                                                    className="w-full border p-3 rounded-lg focus:border-primary outline-none"
+                                                    placeholder="Enter 6-digit code (Demo: 123456)"
+                                                />
+                                            </div>
+                                            <div className="pt-2 flex gap-4">
+                                                <button
+                                                    type="submit"
+                                                    className="bg-primary text-white px-6 py-2.5 rounded-xl hover:bg-opacity-90 transition-all font-bold uppercase tracking-widest text-[10px] shadow-sm flex items-center gap-2"
+                                                >
+                                                    <Lock size={14} />
+                                                    Confirm & Update Password
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    onClick={() => { setOtpStep(false); setOtpCode(''); setPasswordMessage({ text: '', type: '' }); }}
+                                                    className="bg-gray-100 text-gray-700 px-6 py-2.5 rounded-xl hover:bg-gray-200 transition-all font-bold uppercase tracking-widest text-[10px] shadow-sm flex items-center gap-2"
+                                                >
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </form>
+                                    ) : (
+                                        <form onSubmit={handlePasswordSubmit} className="mt-10 space-y-6 pt-10 border-t border-gray-100">
+                                            <h3 className="text-lg font-serif text-gray-800 flex items-center gap-2">
+                                                Change Password
+                                            </h3>
+                                            {passwordMessage.text && (
+                                                <div className={`p-3 rounded-lg text-xs font-bold uppercase tracking-widest flex items-center gap-2 ${passwordMessage.type === 'error' ? 'bg-red-50 text-red-600' : 'bg-green-50 text-green-600'}`}>
+                                                    {passwordMessage.type === 'error' ? <AlertCircle size={14} /> : <CheckCircle size={14} />}
+                                                    {passwordMessage.text}
+                                                </div>
+                                            )}
+                                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                                <div>
+                                                    <FieldLabel>New Password</FieldLabel>
+                                                    <input
+                                                        type="password"
+                                                        value={passwordForm.newPassword}
+                                                        onChange={e => setPasswordForm({ ...passwordForm, newPassword: e.target.value })}
+                                                        className="w-full border p-3 rounded-lg focus:border-primary outline-none"
+                                                        placeholder="Enter new password"
+                                                    />
+                                                </div>
+                                                <div>
+                                                    <FieldLabel>Confirm Password</FieldLabel>
+                                                    <input
+                                                        type="password"
+                                                        value={passwordForm.confirmPassword}
+                                                        onChange={e => setPasswordForm({ ...passwordForm, confirmPassword: e.target.value })}
+                                                        className="w-full border p-3 rounded-lg focus:border-primary outline-none"
+                                                        placeholder="Verify new password"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="pt-2">
+                                                <button
+                                                    type="submit"
+                                                    className="bg-gray-100 text-gray-700 px-6 py-2.5 rounded-xl hover:bg-gray-200 transition-all font-bold uppercase tracking-widest text-[10px] shadow-sm flex items-center gap-2"
+                                                >
+                                                    <Lock size={14} />
+                                                    Proceed
+                                                </button>
+                                            </div>
+                                        </form>
+                                    )}
 
                                     <div className="mt-12 bg-gray-50 p-6 rounded-xl border border-gray-100">
                                         <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500 mb-4 flex items-center gap-2">

@@ -25,19 +25,23 @@ export const AuthProvider = ({ children }) => {
     }, []);
 
     const login = (email, password) => {
-        // Simple hardcoded check for demonstration (user can change this later or connect to Supabase)
-        if (email === 'admin@wrapngift.com' && password === 'admin123') {
+        const storedEmail = adminProfile.email;
+        const storedPassword = localStorage.getItem('wrapngift_admin_password') || 'admin123';
+
+        if ((email === storedEmail || email === 'admin@wrapngift.com') && password === storedPassword) {
             setIsAuthenticated(true);
             localStorage.setItem('wrapngift_admin_auth', 'true');
             return { success: true };
         }
-        // Fallback catch-all for local development if they just want to get in
-        if (password === 'admin123') {
+
+        // Fallback for local dev
+        if (password === storedPassword) {
             setIsAuthenticated(true);
             localStorage.setItem('wrapngift_admin_auth', 'true');
             return { success: true };
         }
-        return { success: false, error: 'Invalid credentials. Default: admin@wrapngift.com / admin123' };
+
+        return { success: false, error: 'Invalid credentials.' };
     };
 
     const logout = () => {
@@ -52,8 +56,13 @@ export const AuthProvider = ({ children }) => {
         return { success: true };
     };
 
+    const updatePassword = (newPassword) => {
+        localStorage.setItem('wrapngift_admin_password', newPassword);
+        return { success: true };
+    };
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, adminProfile, login, logout, updateProfile }}>
+        <AuthContext.Provider value={{ isAuthenticated, adminProfile, login, logout, updateProfile, updatePassword }}>
             {children}
         </AuthContext.Provider>
     );
