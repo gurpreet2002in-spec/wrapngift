@@ -3,10 +3,12 @@ import { useGifting } from '../../context/GiftingContext';
 import { useSiteContent } from '../../context/SiteContentContext';
 import {
     Plus, Trash2, Edit2, Save, X, Image as ImageIcon,
-    Layout, Gift, Info, Star, BarChart2, Phone, ChevronDown, ChevronUp, CheckCircle, AlertCircle, Loader
+    Layout, Gift, Info, Star, BarChart2, Phone, ChevronDown, ChevronUp, CheckCircle, AlertCircle, Loader, User, LogOut
 } from 'lucide-react';
 import ImageUpload from '../../components/ImageUpload';
 import { PromotionalManager } from './PromotionalManager';
+import { useAuth } from '../../context/AuthContext';
+import AdminLogin from './Login';
 
 // ─── Reusable Field Components ────────────────────────────────────────────────
 
@@ -373,6 +375,8 @@ const SiteContentTab = () => {
 // ─── Main Admin Dashboard ─────────────────────────────────────────────────────
 
 const AdminDashboard = () => {
+    const { isAuthenticated, adminProfile, updateProfile, logout } = useAuth();
+
     const {
         categories, updateCategory, addCategory, deleteCategory,
         addProduct, updateProduct, deleteProduct,
@@ -391,6 +395,10 @@ const AdminDashboard = () => {
 
     // New Product State
     const [newProduct, setNewProduct] = useState({ title: '', price: '', description: '', image: '' });
+
+    // Profile State
+    const [profileForm, setProfileForm] = useState(adminProfile);
+    const [profileSaveStatus, setProfileSaveStatus] = useState(false);
 
     // Testimonial State
     const [isAddingTestimonial, setIsAddingTestimonial] = useState(false);
@@ -466,9 +474,20 @@ const AdminDashboard = () => {
         setEditedProduct({});
     };
 
+    if (!isAuthenticated) {
+        return <AdminLogin />;
+    }
+
     if (loading) {
         return <div className="h-screen flex items-center justify-center text-primary font-serif text-xl">Loading Admin Panel...</div>;
     }
+
+    const handleProfileSubmit = (e) => {
+        e.preventDefault();
+        setProfileSaveStatus(true);
+        updateProfile(profileForm);
+        setTimeout(() => setProfileSaveStatus(false), 2000);
+    };
 
     const currentCategory = categories[selectedCategory];
 
@@ -477,6 +496,7 @@ const AdminDashboard = () => {
         { id: 'promotional', label: '🎁 Promotional Gifts' },
         { id: 'testimonials', label: '💬 Testimonials' },
         { id: 'site_content', label: '🎨 Site Content & Images' },
+        { id: 'profile', label: '👤 Admin Settings' },
     ];
 
     return (
@@ -732,6 +752,68 @@ const AdminDashboard = () => {
                                     {testimonials.length === 0 && !isAddingTestimonial && (
                                         <div className="text-center py-12 text-gray-400 italic">No testimonials added yet. Share some kind words!</div>
                                     )}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    {/* ── PROFILE & SETTINGS TAB ── */}
+                    {activeTab === 'profile' && (
+                        <div className="animate-in fade-in duration-500">
+                            <div className="bg-white p-8 shadow-md rounded-2xl border-t-4 border-gray-800">
+                                <div className="flex justify-between items-center mb-8 pb-4 border-b border-gray-100">
+                                    <h2 className="text-2xl font-serif text-gray-800 flex items-center gap-3">
+                                        <User size={24} className="text-primary" /> Admin Settings
+                                    </h2>
+                                    <button
+                                        onClick={logout}
+                                        className="flex items-center gap-2 px-6 py-2.5 bg-red-50 text-red-600 hover:bg-red-600 hover:text-white transition-colors rounded-xl font-bold uppercase tracking-widest text-[10px]"
+                                    >
+                                        <LogOut size={14} /> Sign Out Securely
+                                    </button>
+                                </div>
+                                <div className="max-w-xl">
+                                    <form onSubmit={handleProfileSubmit} className="space-y-6">
+                                        <div>
+                                            <FieldLabel>Display Name</FieldLabel>
+                                            <input
+                                                type="text"
+                                                value={profileForm.name}
+                                                onChange={e => setProfileForm({ ...profileForm, name: e.target.value })}
+                                                className="w-full border p-3 rounded-lg focus:border-primary outline-none"
+                                            />
+                                        </div>
+                                        <div>
+                                            <FieldLabel>Admin Email (Login ID)</FieldLabel>
+                                            <input
+                                                type="email"
+                                                value={profileForm.email}
+                                                onChange={e => setProfileForm({ ...profileForm, email: e.target.value })}
+                                                className="w-full border p-3 rounded-lg focus:border-primary outline-none bg-gray-50"
+                                            />
+                                            <p className="text-[10px] text-gray-500 mt-1 uppercase tracking-widest">Used for receiving important alerts</p>
+                                        </div>
+                                        <div className="pt-4 border-t border-gray-100 flex items-center gap-4">
+                                            <button
+                                                type="submit"
+                                                className="bg-gray-900 text-white px-8 py-3 rounded-xl hover:bg-black transition-all font-bold uppercase tracking-widest text-[10px] shadow-lg flex items-center gap-2"
+                                            >
+                                                <Save size={14} />
+                                                Save Changes
+                                            </button>
+                                            {profileSaveStatus && <span className="text-green-500 font-bold uppercase tracking-widest text-[10px] flex items-center gap-1"><CheckCircle size={14} /> Saved Successfully!</span>}
+                                        </div>
+                                    </form>
+
+                                    <div className="mt-12 bg-gray-50 p-6 rounded-xl border border-gray-100">
+                                        <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-gray-500 mb-4 flex items-center gap-2">
+                                            <ShieldCheck size={14} /> System Information
+                                        </h3>
+                                        <div className="space-y-2 text-sm text-gray-600">
+                                            <p className="flex justify-between border-b pb-2"><span className="uppercase tracking-widest text-[10px] font-bold">Role:</span> <span className="text-primary font-serif italic">{adminProfile.role}</span></p>
+                                            <p className="flex justify-between border-b pb-2"><span className="uppercase tracking-widest text-[10px] font-bold">System Version:</span> <span>v2.1.0 (Promotional Gifts Enabled)</span></p>
+                                            <p className="flex justify-between pb-2"><span className="uppercase tracking-widest text-[10px] font-bold">Last Login:</span> <span>Just now</span></p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

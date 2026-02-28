@@ -1,13 +1,13 @@
 import React from 'react';
-import { useGifting } from '../context/GiftingContext';
+import { usePromotional } from '../context/PromotionalContext';
 import { motion } from 'framer-motion';
 
-const Gallery = () => {
-    const { categories } = useGifting();
+const PromotionalGallery = () => {
+    const { promotionalCategories } = usePromotional();
 
-    // Flatten all products from all categories into a single gallery array
-    const allProducts = Object.values(categories).flatMap(cat =>
-        cat.products.map(p => ({ ...p, categoryTitle: cat.title }))
+    // Flatten all products from all promotional categories into a single gallery array
+    const allProducts = Object.values(promotionalCategories || {}).flatMap(cat =>
+        (cat.products || []).map(p => ({ ...p, categoryTitle: cat.title }))
     );
 
     return (
@@ -15,9 +15,9 @@ const Gallery = () => {
             <div className="container mx-auto px-6">
                 <div className="text-center mb-20 max-w-2xl mx-auto">
                     <span className="text-highlight font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block underline decoration-royalty/20 underline-offset-8">Curated Collection</span>
-                    <h1 className="text-5xl md:text-6xl font-serif text-royalty mb-6">Our Design Gallery</h1>
+                    <h1 className="text-5xl md:text-6xl font-serif text-royalty mb-6">Promotional Gifts</h1>
                     <p className="text-royalty/60 font-serif italic text-lg leading-relaxed">
-                        A visual journey through our most exquisite gifting creations and artisanal packaging designs.
+                        A definitive collection of quality promotional items and corporate gifts.
                     </p>
                 </div>
 
@@ -47,10 +47,13 @@ const Gallery = () => {
                             <div className="absolute inset-0 pointer-events-none opacity-[0.03] mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/leather.png')]" />
                         </motion.div>
                     ))}
+                    {allProducts.length === 0 && (
+                        <div className="text-center w-full col-span-full py-20 text-gray-500 italic">No promotional gifts available yet.</div>
+                    )}
                 </div>
             </div>
         </div>
     );
 };
 
-export default Gallery;
+export default PromotionalGallery;
