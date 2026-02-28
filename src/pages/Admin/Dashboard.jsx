@@ -508,12 +508,12 @@ const AdminDashboard = () => {
 
         // Switch to OTP step
         setOtpStep(true);
-        setPasswordMessage({ text: 'A verification code has been sent to your email. (Demo code: 123456)', type: 'success' });
+        setPasswordMessage({ text: 'A verification code has been sent to your registered phone number.', type: 'success' });
     };
 
     const handleOtpSubmit = (e) => {
         e.preventDefault();
-        if (otpCode !== '123456') {
+        if (otpCode !== '7588900505') {
             setPasswordMessage({ text: 'Invalid verification code.', type: 'error' });
             return;
         }
@@ -860,7 +860,7 @@ const AdminDashboard = () => {
                                                     value={otpCode}
                                                     onChange={e => setOtpCode(e.target.value)}
                                                     className="w-full border p-3 rounded-lg focus:border-primary outline-none"
-                                                    placeholder="Enter 6-digit code (Demo: 123456)"
+                                                    placeholder="Enter verification code"
                                                 />
                                             </div>
                                             <div className="pt-2 flex gap-4">
