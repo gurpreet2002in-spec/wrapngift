@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Send, Phone, Mail, MapPin, CheckCircle } from 'lucide-react';
+import { useSiteContent } from '../../context/SiteContentContext';
 
 const Contact = () => {
+    const { content } = useSiteContent();
     const location = useLocation();
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -68,7 +70,7 @@ const Contact = () => {
                                 </div>
                                 <div>
                                     <h4 className="text-white/50 font-bold text-[10px] uppercase tracking-[0.3em] mb-2">Call Us</h4>
-                                    <p className="text-white text-xl tracking-tight">+91 93156 97718</p>
+                                    <p className="text-white text-xl tracking-tight">+91 {content.contact_whatsapp}</p>
                                 </div>
                             </div>
 
@@ -78,7 +80,7 @@ const Contact = () => {
                                 </div>
                                 <div>
                                     <h4 className="text-white/50 font-bold text-[10px] uppercase tracking-[0.3em] mb-2">Email Us</h4>
-                                    <p className="text-white text-xl tracking-tight">gurpreet2002in@gmail.com</p>
+                                    <p className="text-white text-xl tracking-tight">{content.contact_email}</p>
                                 </div>
                             </div>
 
@@ -89,13 +91,8 @@ const Contact = () => {
                                 <div>
                                     <h4 className="text-white/50 font-bold text-[10px] uppercase tracking-[0.3em] mb-2">Our Presence</h4>
                                     <div className="space-y-6">
-                                        <p className="text-white/70 text-[13px] leading-relaxed">
-                                            <span className="block font-bold text-accent mb-1 tracking-widest">PITAMPURA</span>
-                                            B-68 Pushpanjali Enclave, Pitampura New Delhi
-                                        </p>
-                                        <p className="text-white/70 text-[13px] leading-relaxed">
-                                            <span className="block font-bold text-accent mb-1 tracking-widest">GURGAON</span>
-                                            C block, Sushant Lok 1, opp Courtyard by Marriott
+                                        <p className="text-white/70 text-[13px] leading-relaxed whitespace-pre-line">
+                                            {content.contact_address}
                                         </p>
                                     </div>
                                 </div>

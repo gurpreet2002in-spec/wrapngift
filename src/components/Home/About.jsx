@@ -1,7 +1,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useSiteContent } from '../../context/SiteContentContext';
 
 const About = () => {
+    const { content } = useSiteContent();
+
+    // Highlight by replacing the highlighted phrase in the title
+    const renderTitle = () => {
+        const title = content.about_home_title || '';
+        const highlight = content.about_home_title_highlight || '';
+        if (highlight && title.includes(highlight)) {
+            const parts = title.split(highlight);
+            return (
+                <>
+                    {parts[0]}
+                    <span className="text-primary italic">{highlight}</span>
+                    {parts[1]}
+                </>
+            );
+        }
+        return title;
+    };
+
     return (
         <section id="about" className="py-20 bg-background">
             <div className="container mx-auto px-6">
@@ -15,7 +35,7 @@ const About = () => {
                     >
                         <div className="relative z-10">
                             <img
-                                src="https://images.unsplash.com/photo-1512413914633-b5043f4041ea?q=80&w=1000&auto=format&fit=crop"
+                                src={content.about_home_image}
                                 alt="Crafting Gifts"
                                 className="rounded-lg shadow-xl w-full h-96 object-cover"
                             />
@@ -31,23 +51,23 @@ const About = () => {
                         className="md:w-1/2"
                     >
                         <h2 className="font-serif text-3xl md:text-4xl text-secondary mb-6 leading-tight">
-                            A Legacy of <span className="text-primary italic">Thoughtful Gifting</span>
+                            {renderTitle()}
                         </h2>
                         <p className="text-gray-600 mb-6 leading-relaxed">
-                            Established with a passion for celebrating relationships, Wrap and Pack Gifting creates bespoke experiences that linger in memory long after the occasion has passed.
+                            {content.about_home_para1}
                         </p>
                         <p className="text-gray-600 mb-8 leading-relaxed">
-                            We specialize in crafting memorable moments through creative excellence and meticulous attention to detail. From grand weddings to intimate corporate events, and every milestone in between, we are your trusted partner in expressing gratitude and love.
+                            {content.about_home_para2}
                         </p>
 
                         <div className="grid grid-cols-2 gap-6">
                             <div>
-                                <h4 className="font-serif text-xl text-primary mb-2">5+ Years</h4>
-                                <p className="text-sm text-gray-500">of Experience</p>
+                                <h4 className="font-serif text-xl text-primary mb-2">{content.about_home_stat1_number}</h4>
+                                <p className="text-sm text-gray-500">{content.about_home_stat1_label}</p>
                             </div>
                             <div>
-                                <h4 className="font-serif text-xl text-primary mb-2">1000+</h4>
-                                <p className="text-sm text-gray-500">Happy Clients</p>
+                                <h4 className="font-serif text-xl text-primary mb-2">{content.about_home_stat2_number}</h4>
+                                <p className="text-sm text-gray-500">{content.about_home_stat2_label}</p>
                             </div>
                         </div>
 

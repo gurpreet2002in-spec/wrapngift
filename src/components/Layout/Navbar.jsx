@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Menu, X, ShoppingBag, Search, Phone, Mail, ChevronDown } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { useGifting } from '../../context/GiftingContext';
+import { useSiteContent } from '../../context/SiteContentContext';
+import { usePromotional } from '../../context/PromotionalContext';
 
 const Navbar = () => {
     const { categories } = useGifting();
+    const { content } = useSiteContent();
+    const { promotionalCategories } = usePromotional();
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const [productMenuOpen, setProductMenuOpen] = useState(false);
+    const [promoMenuOpen, setPromoMenuOpen] = useState(false);
     const location = useLocation();
 
     useEffect(() => {
@@ -21,7 +26,6 @@ const Navbar = () => {
     const navLinks = [
         { name: 'Home', path: '/' },
         { name: 'About', path: '/about' },
-        { name: 'Gallery', path: '/gallery' },
         { name: 'Contact Us', path: '/', hash: '#contact' },
     ];
 
@@ -69,7 +73,30 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    <Link to="/gallery" className="text-[12px] font-bold tracking-[0.15em] uppercase text-secondary hover:text-primary transition-colors">Gallery</Link>
+                    {/* Promotional Dropdown */}
+                    <div
+                        className="relative group"
+                        onMouseEnter={() => setPromoMenuOpen(true)}
+                        onMouseLeave={() => setPromoMenuOpen(false)}
+                    >
+                        <button className="flex items-center gap-1 text-[12px] font-bold tracking-[0.15em] uppercase text-secondary hover:text-primary transition-colors outline-none">
+                            Promotional Gifts <ChevronDown size={14} className={`transition-transform duration-300 ${promoMenuOpen ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        <div className={`absolute top-full -left-4 w-64 bg-white shadow-2xl border border-gray-50 rounded-xl py-4 transition-all duration-300 origin-top ${promoMenuOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'}`}>
+                            <div className="absolute top-0 left-8 -translate-y-2 w-4 h-4 bg-white rotate-45 border-l border-t border-gray-50" />
+                            {Object.values(promotionalCategories || {}).map(cat => (
+                                <Link
+                                    key={cat.id}
+                                    to={`/promotional/${cat.id}`}
+                                    className="block px-6 py-3 text-[11px] font-bold uppercase tracking-widest text-secondary hover:bg-pearl hover:text-primary transition-all border-b border-gray-50 last:border-0"
+                                >
+                                    {cat.title}
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+
                     <Link to="/#contact" className="text-[12px] font-bold tracking-[0.15em] uppercase text-secondary hover:text-primary transition-colors">Contact Us</Link>
                 </div>
 
@@ -81,7 +108,7 @@ const Navbar = () => {
                         </div>
                         <div className="flex flex-col">
                             <span className="text-[10px] uppercase tracking-widest text-gray-400 leading-none mb-1">Call Us</span>
-                            <span className="text-[11px] font-bold">+91 93156 97718</span>
+                            <span className="text-[11px] font-bold">+91 {content.contact_whatsapp}</span>
                         </div>
                     </div>
 
@@ -114,7 +141,23 @@ const Navbar = () => {
                         </div>
                     </div>
 
-                    <Link to="/gallery" className="text-secondary hover:text-primary uppercase tracking-widest text-[12px] font-bold" onClick={() => setIsOpen(false)}>Gallery</Link>
+                    {/* Mobile Promotional Submenu */}
+                    <div className="w-full px-8 pb-2">
+                        <span className="block text-gray-400 text-[10px] uppercase tracking-[0.2em] mb-3 text-center">Promotional Gifts</span>
+                        <div className="grid grid-cols-2 gap-2">
+                            {Object.values(promotionalCategories || {}).map(cat => (
+                                <Link
+                                    key={cat.id}
+                                    to={`/promotional/${cat.id}`}
+                                    className="bg-pearl px-4 py-3 rounded-lg text-center text-[11px] font-bold uppercase tracking-widest text-secondary"
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    {cat.title}
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+
                     <Link to="/#contact" className="text-secondary hover:text-primary uppercase tracking-widest text-[12px] font-bold" onClick={() => setIsOpen(false)}>Contact Us</Link>
                 </div>
             )}

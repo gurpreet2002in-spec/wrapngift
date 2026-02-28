@@ -2,19 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Send, Phone, ShieldCheck, Truck, Clock } from 'lucide-react';
 import { useGifting } from '../context/GiftingContext';
+import { usePromotional } from '../context/PromotionalContext';
 
 const ProductDetailPage = () => {
     const { productId } = useParams();
     const { categories, loading } = useGifting();
+    const { promotionalCategories, promoLoading } = usePromotional();
     const navigate = useNavigate();
     const [product, setProduct] = useState(null);
     const [relatedProducts, setRelatedProducts] = useState([]);
 
     useEffect(() => {
-        if (!loading && categories) {
+        if (!loading && !promoLoading && categories && promotionalCategories) {
             // Search for product in all categories
             let foundProduct = null;
             let foundCategoryId = null;
+            let isPromo = false;
 
             Object.keys(categories).forEach(catId => {
                 const p = categories[catId].products.find(item => item.id.toString() === productId);
@@ -24,17 +27,29 @@ const ProductDetailPage = () => {
                 }
             });
 
+            if (!foundProduct) {
+                Object.keys(promotionalCategories).forEach(catId => {
+                    const p = promotionalCategories[catId].products.find(item => item.id.toString() === productId);
+                    if (p) {
+                        foundProduct = p;
+                        foundCategoryId = catId;
+                        isPromo = true;
+                    }
+                });
+            }
+
             if (foundProduct) {
                 setProduct(foundProduct);
                 // Get related products from same category (excluding current)
-                const related = categories[foundCategoryId].products
+                const categoryList = isPromo ? promotionalCategories : categories;
+                const related = categoryList[foundCategoryId].products
                     .filter(p => p.id.toString() !== productId)
                     .slice(0, 4);
                 setRelatedProducts(related);
             }
         }
         window.scrollTo(0, 0);
-    }, [productId, categories, loading]);
+    }, [productId, categories, loading, promotionalCategories, promoLoading]);
 
     const handleInquiry = () => {
         navigate('/', { state: { prefillInquiry: `Interested in: ${product.title}` } });
@@ -46,7 +61,7 @@ const ProductDetailPage = () => {
         }, 100);
     };
 
-    if (loading) return <div className="h-screen flex items-center justify-center text-primary">Loading Product...</div>;
+    if (loading || promoLoading) return <div className="h-screen flex items-center justify-center text-primary">Loading Product...</div>;
 
     if (!product) return (
         <div className="h-screen flex flex-col items-center justify-center pt-20">

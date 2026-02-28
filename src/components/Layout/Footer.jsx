@@ -1,8 +1,10 @@
 import React from 'react';
 import { Instagram, Facebook, Mail, Phone, MapPin, Linkedin, Twitter } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useSiteContent } from '../../context/SiteContentContext';
 
 const Footer = () => {
+    const { content } = useSiteContent();
     return (
         <footer className="bg-secondary text-white pt-20 pb-10 border-t border-white/5 font-sans">
             <div className="container mx-auto px-6 max-w-6xl">
@@ -50,17 +52,17 @@ const Footer = () => {
                     <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
                         <h4 className="text-accent font-serif text-lg font-bold mb-8 tracking-wide">Contact Us</h4>
                         <div className="space-y-5 mb-8">
-                            <a href="tel:+919315697718" className="flex items-center gap-4 text-white/70 hover:text-white transition-colors group">
+                            <a href={`tel:+91${content.contact_whatsapp}`} className="flex items-center gap-4 text-white/70 hover:text-white transition-colors group">
                                 <Phone size={18} className="text-accent" />
-                                <span className="text-[14px]">+91 93156 97718</span>
+                                <span className="text-[14px]">+91 {content.contact_whatsapp}</span>
                             </a>
-                            <a href="mailto:gurpreet2002in@gmail.com" className="flex items-center gap-4 text-white/70 hover:text-white transition-colors group">
+                            <a href={`mailto:${content.contact_email}`} className="flex items-center gap-4 text-white/70 hover:text-white transition-colors group">
                                 <Mail size={18} className="text-accent" />
-                                <span className="text-[14px]">gurpreet2002in@gmail.com</span>
+                                <span className="text-[14px]">{content.contact_email}</span>
                             </a>
                             <div className="flex items-start gap-4 text-white/70 leading-relaxed group">
                                 <MapPin size={18} className="text-accent shrink-0 mt-1" />
-                                <span className="text-[14px]">Pitampura & Gurgaon, NCR, India</span>
+                                <span className="text-[14px] whitespace-pre-line">{content.contact_address}</span>
                             </div>
                         </div>
 
