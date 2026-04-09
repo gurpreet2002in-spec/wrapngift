@@ -29,7 +29,13 @@ export const AuthProvider = ({ children }) => {
                     if (profileRow && profileRow.value) setAdminProfile(profileRow.value);
 
                     const passRow = data.find(d => d.key === 'admin_password');
-                    if (passRow && passRow.value) setGlobalPassword(passRow.value);
+                    if (passRow && passRow.value) {
+                        let val = passRow.value;
+                        if (typeof val === 'string' && val.startsWith('"') && val.endsWith('"')) {
+                            val = val.slice(1, -1);
+                        }
+                        setGlobalPassword(val);
+                    }
                 }
             } catch (err) {
                 console.error("Failed to load admin settings", err);
@@ -65,19 +71,26 @@ export const AuthProvider = ({ children }) => {
                 }
                 const passRow = data.find(d => d.key === 'admin_password');
                 if (passRow && passRow.value) {
-                    currentPassword = passRow.value;
-                    setGlobalPassword(passRow.value);
+                    let val = passRow.value;
+                    if (typeof val === 'string' && val.startsWith('"') && val.endsWith('"')) {
+                        val = val.slice(1, -1);
+                    }
+                    currentPassword = val;
+                    setGlobalPassword(val);
                 }
             }
 
-            if ((email === currentEmail || email === 'admin@wrapngift.com') && password === currentPassword) {
+            const inputEmail = email.trim().toLowerCase();
+            const inputPassword = password.trim();
+
+            if ((inputEmail === currentEmail.toLowerCase() || inputEmail === 'admin@wrapngift.com') && inputPassword === currentPassword) {
                 setIsAuthenticated(true);
                 localStorage.setItem('wrapngift_admin_auth', 'true');
                 return { success: true };
             }
 
             // Fallback for local dev
-            if (password === currentPassword) {
+            if (inputPassword === currentPassword) {
                 setIsAuthenticated(true);
                 localStorage.setItem('wrapngift_admin_auth', 'true');
                 return { success: true };
@@ -109,17 +122,22 @@ export const AuthProvider = ({ children }) => {
     };
 
     const updatePassword = async (newPassword) => {
-        setGlobalPassword(newPassword);
+        try {
+            setGlobalPassword(newPassword);
 
-        await supabase.from('site_content').upsert({
-            key: 'admin_password',
-            // primitive strings must be explicitly stringified for jsonb columns in standard supabase
-            value: JSON.stringify(newPassword),
-            section: 'admin',
-            updated_at: new Date().toISOString()
-        }, { onConflict: 'key' });
+            const { error } = await supabase.from('site_content').upsert({
+                key: 'admin_password',
+                value: newPassword, // Removed JSON.stringify to prevent double-quotes in DB
+                section: 'admin',
+                updated_at: new Date().toISOString()
+            }, { onConflict: 'key' });
 
-        return { success: true };
+            if (error) throw error;
+            return { success: true };
+        } catch (error) {
+            console.error('Failed to update password:', error);
+            return { success: false, error: error.message };
+        }
     };
 
     return (

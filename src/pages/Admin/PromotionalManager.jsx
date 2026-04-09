@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Plus, Trash2, Edit2, Save, X, Image as ImageIcon } from 'lucide-react';
 import { usePromotional } from '../../context/PromotionalContext';
 import ImageUpload from '../../components/ImageUpload';
+import RichTextEditor from '../../components/Common/RichTextEditor';
 
 const FieldLabel = ({ children }) => (
     <label className="block text-[10px] uppercase tracking-[0.2em] text-gray-400 font-bold mb-1">{children}</label>
@@ -125,7 +126,7 @@ export const PromotionalManager = () => {
                             </div>
                             <div>
                                 <FieldLabel>Description</FieldLabel>
-                                <textarea placeholder="Describe this collection..." value={newCategory.description} onChange={e => setNewCategory({ ...newCategory, description: e.target.value })} className="w-full border p-3 rounded-lg focus:border-primary outline-none" rows="3" />
+                                <RichTextEditor value={newCategory.description} onChange={val => setNewCategory({ ...newCategory, description: val })} placeholder="Describe this collection..." />
                             </div>
                             <ImageUpload currentImage={newCategory.banner} onImageUploaded={url => setNewCategory({ ...newCategory, banner: url })} label="Category Banner Image" />
                             <div className="flex justify-end pt-4 gap-4">
@@ -174,7 +175,10 @@ export const PromotionalManager = () => {
                                                         {Object.values(categories).map(cat => <option key={cat.id} value={cat.id}>{cat.title}</option>)}
                                                     </select>
                                                 </div>
-                                                <textarea value={editedProduct.description || ''} onChange={e => setEditedProduct({ ...editedProduct, description: e.target.value })} className="w-full border p-2 rounded-lg outline-none focus:border-primary" placeholder="Product Description" rows="3" />
+                                                <div>
+                                                    <FieldLabel>Product Description</FieldLabel>
+                                                    <RichTextEditor value={editedProduct.description || ''} onChange={val => setEditedProduct({ ...editedProduct, description: val })} placeholder="Product Description" />
+                                                </div>
                                                 <ImageUpload currentImage={editedProduct.image} onImageUploaded={url => setEditedProduct({ ...editedProduct, image: url })} label="Product Image" />
                                                 <div className="flex gap-2 justify-end">
                                                     <button onClick={saveProductChanges} className="flex items-center gap-2 bg-green-500 text-white px-4 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest"><Save size={14} /> Save</button>
@@ -208,9 +212,11 @@ export const PromotionalManager = () => {
                                 </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                                     <input type="text" placeholder="Product Name" className="border p-2 rounded-lg outline-none" value={newProduct.title} onChange={e => setNewProduct({ ...newProduct, title: e.target.value })} />
-                                    <input type="text" placeholder="Price (e.g. ₹2,500)" className="border p-2 rounded-lg outline-none" value={newProduct.price} onChange={e => setNewProduct({ ...newProduct, price: e.target.value })} />
                                 </div>
-                                <textarea placeholder="Product Description (optional)" className="w-full border p-2 rounded-lg outline-none mb-4" value={newProduct.description} onChange={e => setNewProduct({ ...newProduct, description: e.target.value })} rows="3" />
+                                <div className="mb-4">
+                                    <FieldLabel>Product Description</FieldLabel>
+                                    <RichTextEditor value={newProduct.description} onChange={val => setNewProduct({ ...newProduct, description: val })} placeholder="Product Description (optional)" />
+                                </div>
                                 <ImageUpload currentImage={newProduct.image} onImageUploaded={url => setNewProduct({ ...newProduct, image: url })} label="Product Image" />
                                 <div className="flex justify-end pt-4">
                                     <button onClick={handleAddProduct} className="bg-primary text-white px-10 py-3 rounded-full hover:bg-opacity-90 transition-all font-bold uppercase tracking-widest text-[10px] shadow-lg shadow-primary/20">Add Product</button>
