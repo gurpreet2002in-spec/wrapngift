@@ -1037,12 +1037,7 @@ const AdminDashboard = () => {
   // Testimonial State
   const [isAddingTestimonial, setIsAddingTestimonial] = useState(false);
   const [editingTestimonialId, setEditingTestimonialId] = useState(null);
-  const [newTestimonial, setNewTestimonial] = useState({
-    name: "",
-    role: "",
-    content: "",
-    image_url: "",
-  });
+  const [newTestimonial, setNewTestimonial] = useState({ image_url: "" });
 
   // Auto-select first category if none selected
   React.useEffect(() => {
@@ -1078,9 +1073,16 @@ const AdminDashboard = () => {
   };
 
   const handleAddTestimonial = () => {
-    if (!newTestimonial.name) return;
-    addTestimonial(newTestimonial);
-    setNewTestimonial({ name: "", image_url: "" });
+    if (!newTestimonial.image_url) return;
+    
+    addTestimonial({
+      name: `Client-${Date.now()}`,
+      role: "Client",
+      content: "Client Logo",
+      image_url: newTestimonial.image_url
+    });
+    
+    setNewTestimonial({ image_url: "" });
     setIsAddingTestimonial(false);
   };
 
@@ -1673,29 +1675,14 @@ const AdminDashboard = () => {
 
                 {isAddingTestimonial && (
                   <div className="bg-pearl p-6 rounded-2xl mb-8 space-y-6 animate-in slide-in-from-top-4 duration-500">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <FieldLabel>Client Name</FieldLabel>
-                        <input
-                          type="text"
-                          placeholder="e.g. Acme Corp"
-                          value={newTestimonial.name}
-                          onChange={(e) =>
-                            setNewTestimonial({
-                              ...newTestimonial,
-                              name: e.target.value,
-                            })
-                          }
-                          className="w-full border p-3 rounded-lg focus:border-primary outline-none"
-                        />
-                      </div>
-                      <div className="flex flex-col justify-end">
+                    <div className="flex flex-col gap-4">
+                      <div className="flex flex-col">
                         <ImageUpload
                           currentImage={newTestimonial.image_url}
                           onImageUploaded={(url) =>
                             setNewTestimonial({ ...newTestimonial, image_url: url })
                           }
-                          label="Client Logo"
+                          label="Upload Client Logo"
                         />
                       </div>
                     </div>
@@ -1723,21 +1710,14 @@ const AdminDashboard = () => {
                           className="w-16 h-16 rounded-full object-cover border-2 border-highlight shadow-md"
                           alt={t.name}
                         />
-                        <div className="flex-1 space-y-2 flex flex-col justify-center">
-                          <div className="flex justify-between items-center">
-                            <div>
-                              <h4 className="font-bold text-royalty uppercase tracking-widest text-sm">
-                                {t.name}
-                              </h4>
-                            </div>
-                            <button
-                              onClick={() => deleteTestimonial(t.id)}
-                              className="text-red-400 hover:text-red-600 p-2 transition-colors"
-                              title="Delete Client"
-                            >
-                              <Trash2 size={18} />
-                            </button>
-                          </div>
+                        <div className="flex-1 flex justify-end">
+                          <button
+                            onClick={() => deleteTestimonial(t.id)}
+                            className="text-red-400 hover:text-red-600 p-2 transition-colors"
+                            title="Delete Client Logo"
+                          >
+                            <Trash2 size={18} />
+                          </button>
                         </div>
                       </div>
                     </div>

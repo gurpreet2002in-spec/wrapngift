@@ -27,11 +27,11 @@ const TestimonialSection = () => {
             <div 
               key={client.id || index}
               className="w-32 h-32 md:w-40 md:h-40 flex flex-col items-center justify-center p-6 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
-              title={client.name}
+              title="Trusted Partner"
             >
               <img
                 src={client.image_url || "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200"}
-                alt={client.name}
+                alt="Trusted Partner"
                 className="max-w-full max-h-full object-contain grayscale group-hover:grayscale-0 transition-all duration-500 opacity-60 group-hover:opacity-100"
               />
             </div>

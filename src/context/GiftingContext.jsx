@@ -7,22 +7,7 @@ export const useGifting = () => useContext(GiftingContext);
 
 export const GiftingProvider = ({ children }) => {
     const [categories, setCategories] = useState({});
-    const [testimonials, setTestimonials] = useState([
-        {
-            id: 'mock-1',
-            name: 'Ananya Sharma',
-            role: 'Interior Designer',
-            content: 'The attention to detail in their packaging is unmatched. Every gift I have ordered has been a masterpiece of elegance and luxury.',
-            image_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200'
-        },
-        {
-            id: 'mock-2',
-            name: 'Vikram Malhotra',
-            role: 'Corporate VP',
-            content: 'Wrap n Pack transformed our corporate gifting strategy. Our clients were genuinely impressed with the sophistication of the leather collections.',
-            image_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200'
-        }
-    ]);
+    const [testimonials, setTestimonials] = useState([]);
     const [loading, setLoading] = useState(true);
 
     // Fetch all categories and testimonials on mount
@@ -266,45 +251,13 @@ export const GiftingProvider = ({ children }) => {
             if (error) throw error;
 
             if (!data || data.length === 0) {
-                // Return some high-quality mock data if the DB is empty
-                setTestimonials([
-                    {
-                        id: 'mock-1',
-                        name: 'Ananya Sharma',
-                        role: 'Interior Designer',
-                        content: 'The attention to detail in their packaging is unmatched. Every gift I have ordered has been a masterpiece of elegance and luxury.',
-                        image_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200'
-                    },
-                    {
-                        id: 'mock-2',
-                        name: 'Vikram Malhotra',
-                        role: 'Corporate VP',
-                        content: 'Wrap n Pack transformed our corporate gifting strategy. Our clients were genuinely impressed with the sophistication of the leather collections.',
-                        image_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200'
-                    }
-                ]);
+                setTestimonials([]);
             } else {
                 setTestimonials(data);
             }
         } catch (error) {
             console.error("Failed to fetch testimonials:", error);
-            // Fallback to mock data on error too, so the section is visible
-            setTestimonials([
-                {
-                    id: 'mock-1',
-                    name: 'Ananya Sharma',
-                    role: 'Interior Designer',
-                    content: 'The attention to detail in their packaging is unmatched. Every gift I have ordered has been a masterpiece of elegance and luxury.',
-                    image_url: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=200'
-                },
-                {
-                    id: 'mock-2',
-                    name: 'Vikram Malhotra',
-                    role: 'Corporate VP',
-                    content: 'Wrap n Pack transformed our corporate gifting strategy. Our clients were genuinely impressed with the sophistication of the leather collections.',
-                    image_url: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200'
-                }
-            ]);
+            setTestimonials([]);
         }
     };
 
