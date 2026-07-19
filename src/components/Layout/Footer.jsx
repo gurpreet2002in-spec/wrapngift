@@ -19,15 +19,15 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* 1. Branding Section */}
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
-            <div className="bg-white p-2 rounded-full shadow-2xl mb-6 w-28 h-28 overflow-hidden border-2 border-white/10 group">
+            <div className="bg-white p-2 rounded-xl shadow-2xl mb-6 w-36 h-auto overflow-hidden border-2 border-white/10 group">
               <img
-                src="/logo.jpg"
-                alt="Wrap n Pack Logo"
-                className="w-full h-full object-contain rounded-full transition-transform duration-500 group-hover:scale-110"
+                src="/logo.png"
+                alt="Nikosh Logo"
+                className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-110"
               />
             </div>
             <h3 className="text-accent font-serif text-2xl font-bold tracking-widest mb-2 uppercase">
-              WRAP n PACK
+              NIKOSH
             </h3>
             <p className="text-white/40 text-[10px] uppercase tracking-[0.2em] mb-4 font-bold">
               Premium Gifting Solutions
@@ -186,7 +186,7 @@ const Footer = () => {
         {/* Bottom Line & Copyright */}
         <div className="mt-20 pt-8 border-t border-white/10 text-center">
           <p className="text-[12px] text-white/30 tracking-[0.1em]">
-            &copy; {new Date().getFullYear()} Wrap n Pack Gifting Solutions. All
+            &copy; {new Date().getFullYear()} Nikosh. All
             rights reserved.
           </p>
         </div>

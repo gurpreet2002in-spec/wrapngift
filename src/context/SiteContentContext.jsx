@@ -8,6 +8,12 @@ export const useSiteContent = () => useContext(SiteContentContext);
 // ─── Default Fallback Content ───────────────────────────────────────────────
 // Used when Supabase is unreachable or table not set up yet
 const DEFAULTS = {
+    // Featured
+    featured_section: [
+        { id: 1, title: 'Curated with Love', subtitle: 'The Art of Gifting', description: 'Every hamper is a labor of love, meticulously assembled to convey your deepest emotions. We source the finest products to ensure your gift stands out.', image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop', align: 'left' },
+        { id: 2, title: 'Corporate Excellence', subtitle: 'Make a Statement', description: 'Strengthen business relationships with our premium corporate gifting solutions. elegantly packaged to reflect your brand\'s prestige.', image: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=2070&auto=format&fit=crop', align: 'right' }
+    ],
+
     // Hero
     hero_badge: 'Premium Gifting Solutions',
     hero_title_line1: 'Curated',

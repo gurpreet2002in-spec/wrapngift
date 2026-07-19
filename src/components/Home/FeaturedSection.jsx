@@ -2,30 +2,12 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
-const features = [
-  {
-    id: 1,
-    title: "Curated with Love",
-    subtitle: "The Art of Gifting",
-    description:
-      "Every hamper is a labor of love, meticulously assembled to convey your deepest emotions. We source the finest products to ensure your gift stands out.",
-    image:
-      "https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop",
-    align: "left",
-  },
-  {
-    id: 2,
-    title: "Corporate Excellence",
-    subtitle: "Make a Statement",
-    description:
-      "Strengthen business relationships with our premium corporate gifting solutions. elegantly packaged to reflect your brand's prestige.",
-    image:
-      "https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=2070&auto=format&fit=crop",
-    align: "right",
-  },
-];
+import { useSiteContent } from "../../context/SiteContentContext";
 
 const FeaturedSection = () => {
+  const { content } = useSiteContent();
+  const features = Array.isArray(content.featured_section) ? content.featured_section : [];
+
   return (
     <section className="py-24 overflow-hidden" id="about">
       <div className="container mx-auto px-6">

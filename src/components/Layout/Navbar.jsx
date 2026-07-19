@@ -47,11 +47,11 @@ const Navbar = () => {
           to="/"
           className="absolute left-6 top-0 z-50 transform translate-y-1"
         >
-          <div className="bg-white p-1 rounded-full shadow-2xl border-2 border-gray-100 transform hover:scale-105 transition-transform duration-300">
+          <div className="bg-white p-2 rounded-xl shadow-2xl border-2 border-gray-100 transform hover:scale-105 transition-transform duration-300">
             <img
-              src="/logo.jpg"
-              alt="Wrap n Pack"
-              className="h-14 w-14 md:h-24 md:w-24 object-contain rounded-full"
+              src="/logo.png"
+              alt="Nikosh Logo"
+              className="h-10 md:h-14 w-auto object-contain"
             />
           </div>
         </Link>

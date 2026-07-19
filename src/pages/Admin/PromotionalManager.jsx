@@ -47,7 +47,7 @@ export const PromotionalManager = () => {
     };
 
     const handleAddProduct = () => {
-        if (!newProduct.title || !newProduct.price) return;
+        if (!newProduct.title) return;
         addProduct(selectedCategory, newProduct);
         setNewProduct({ title: '', price: '', description: '', image: '' });
     };
@@ -63,7 +63,7 @@ export const PromotionalManager = () => {
     };
 
     const saveProductChanges = () => {
-        if (!editedProduct.title || !editedProduct.price) return;
+        if (!editedProduct.title) return;
         const original = categories[selectedCategory].products.find(p => p.id === editingProductId);
         if (editedProduct.title !== original.title) updateProduct(selectedCategory, editingProductId, 'title', editedProduct.title);
         if (editedProduct.price !== original.price) updateProduct(selectedCategory, editingProductId, 'price', editedProduct.price);

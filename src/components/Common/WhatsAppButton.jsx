@@ -6,7 +6,7 @@ const WhatsAppButton = () => {
   const { content } = useSiteContent();
   const phoneNumber = content.contact_whatsapp;
   const message = encodeURIComponent(
-    "Hi Wrap n Pack, I'm interested in your gifting solutions. Could you help me?",
+    "Hi Nikosh, I'm interested in your gifting solutions. Could you help me?",
   );
   const whatsappUrl = `https://wa.me/91${phoneNumber}?text=${message}`;
 

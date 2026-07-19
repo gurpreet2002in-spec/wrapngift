@@ -103,9 +103,9 @@ const AdminLogin = () => {
             className="inline-block transform hover:scale-105 transition-transform duration-300"
           >
             <img
-              src="/logo.jpg"
-              alt="Wrap n Pack Logo"
-              className="w-24 h-24 mx-auto rounded-full shadow-xl border-4 border-white mb-6"
+              src="/logo.png"
+              alt="Nikosh Logo"
+              className="w-32 h-auto mx-auto rounded-xl shadow-xl border-4 border-white mb-6"
             />
           </Link>
           <h1 className="text-4xl font-serif text-primary">Admin Portal</h1>
@@ -151,7 +151,7 @@ const AdminLogin = () => {
                     required
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="admin@wrapngift.com"
+                    placeholder="admin@nikosh.co.in"
                     className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border border-gray-100 rounded-xl focus:bg-white focus:border-primary focus:ring-2 focus:ring-primary/10 outline-none transition-all"
                   />
                 </div>

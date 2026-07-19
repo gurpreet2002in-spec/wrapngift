@@ -119,11 +119,13 @@ const ProductDetailPage = () => {
                 alt={product.title}
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
               />
-              <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
-                <span className="text-primary font-bold text-sm tracking-tight">
-                  {product.price}
-                </span>
-              </div>
+              {product.price && (
+                <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full shadow-sm">
+                  <span className="text-primary font-bold text-sm tracking-tight">
+                    {product.price}
+                  </span>
+                </div>
+              )}
             </div>
           </div>
 
@@ -162,29 +164,7 @@ const ProductDetailPage = () => {
               </p>
             </div>
 
-            {/* Features Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-gray-50 p-6 border border-gray-100">
-              <div className="flex gap-3">
-                <Clock size={20} className="text-primary shrink-0" />
-                <div>
-                  <h4 className="text-[11px] font-bold uppercase tracking-widest text-primary mb-1">
-                    Standard Delivery
-                  </h4>
-                  <p className="text-[11px] text-gray-500">3-5 Business Days</p>
-                </div>
-              </div>
-              <div className="flex gap-3">
-                <ShieldCheck size={20} className="text-primary shrink-0" />
-                <div>
-                  <h4 className="text-[11px] font-bold uppercase tracking-widest text-primary mb-1">
-                    Fragile Care
-                  </h4>
-                  <p className="text-[11px] text-gray-500">
-                    Specially packaged for safety
-                  </p>
-                </div>
-              </div>
-            </div>
+
 
             {/* CTA Section */}
             <div className="flex flex-col sm:flex-row gap-4 pt-6">

@@ -77,9 +77,11 @@ const ProductCard = ({ product, categoryId }) => {
         </div>
 
         <div className="mt-auto w-full space-y-6">
-          <p className="text-xl text-highlight font-serif font-bold tracking-widest bg-white/5 py-2 inline-block px-6 rounded-full border border-white/10">
-            {product.price}
-          </p>
+          {product.price && (
+            <p className="text-xl text-highlight font-serif font-bold tracking-widest bg-white/5 py-2 inline-block px-6 rounded-full border border-white/10">
+              {product.price}
+            </p>
+          )}
 
           <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-4">
             <Link

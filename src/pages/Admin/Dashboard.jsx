@@ -278,6 +278,71 @@ const ServicesEditor = ({ content, updateContent, saveStatus }) => {
   );
 };
 
+const FeaturedEditor = ({ content, updateContent, saveStatus }) => {
+  const items = Array.isArray(content.featured_section)
+    ? content.featured_section
+    : [];
+
+  const updateItem = (index, field, value) => {
+    const updated = items.map((c, i) =>
+      i === index ? { ...c, [field]: value } : c,
+    );
+    updateContent("featured_section", updated);
+  };
+
+  return (
+    <div className="space-y-4">
+      {items.map((item, i) => (
+        <div
+          key={item.id || i}
+          className="border border-gray-100 rounded-xl p-4 bg-gray-50 space-y-3"
+        >
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary">
+              Featured Block {i + 1}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <FieldLabel>Title</FieldLabel>
+              <TextInput
+                value={item.title || ""}
+                onChange={(v) => updateItem(i, "title", v)}
+              />
+            </div>
+            <div>
+              <FieldLabel>Subtitle</FieldLabel>
+              <TextInput
+                value={item.subtitle || ""}
+                onChange={(v) => updateItem(i, "subtitle", v)}
+              />
+            </div>
+          </div>
+          <div>
+            <FieldLabel>Description</FieldLabel>
+            <RichTextEditor
+              value={item.description || ""}
+              onChange={(val) => updateItem(i, "description", val)}
+              rows={2}
+            />
+          </div>
+          <div>
+            <FieldLabel>Image</FieldLabel>
+            <ImageUpload
+              currentImage={item.image}
+              onImageUploaded={(url) => updateItem(i, "image", url)}
+              label=""
+            />
+          </div>
+        </div>
+      ))}
+      <div className="flex justify-end mt-4">
+        <SaveIndicator status={saveStatus["featured_section"]} />
+      </div>
+    </div>
+  );
+};
+
 // ─── Values Editor ────────────────────────────────────────────────────────────
 
 const ValuesEditor = ({
@@ -512,6 +577,20 @@ const SiteContentTab = () => {
           contentKey="hero_image"
           {...fieldProps}
         />
+      </SectionCard>
+
+      {/* ── Featured Section ── */}
+      <SectionCard
+        title="Featured Highlights Section"
+        icon={Layout}
+        accent="border-t-4 border-pink-500"
+      >
+        <div className="border-t border-gray-100 pt-5">
+          <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-4">
+            Featured Blocks
+          </p>
+          <FeaturedEditor {...fieldProps} />
+        </div>
       </SectionCard>
 
       {/* ── About (Homepage) ── */}
@@ -836,7 +915,7 @@ const AdminDashboard = () => {
   };
 
   const handleAddProduct = () => {
-    if (!newProduct.title || !newProduct.price) return;
+    if (!newProduct.title) return;
     addProduct(selectedCategory, newProduct);
     setNewProduct({ title: "", price: "", description: "", image: "" });
   };
@@ -865,7 +944,7 @@ const AdminDashboard = () => {
   };
 
   const saveProductChanges = () => {
-    if (!editedProduct.title || !editedProduct.price) return;
+    if (!editedProduct.title) return;
     const original = categories[selectedCategory].products.find(
       (p) => p.id === editingProductId,
     );
