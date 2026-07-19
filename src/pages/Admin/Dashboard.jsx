@@ -516,6 +516,155 @@ const StatsEditor = ({ content, updateContent, saveStatus }) => {
   );
 };
 
+const PRESET_THEMES = {
+  nikosh: { name: "Nikosh Original (Teal/Gold)", primary: "90 178 187", secondary: "25 55 60", accent: "184 146 87" },
+  ruby: { name: "Ruby Elegance (Burgundy/Rose)", primary: "155 40 70", secondary: "45 15 25", accent: "205 130 145" },
+  sapphire: { name: "Sapphire Royal (Blue/Silver)", primary: "40 90 160", secondary: "15 30 55", accent: "190 200 210" },
+  onyx: { name: "Onyx Monotone (Charcoal/Gold)", primary: "80 80 80", secondary: "20 20 20", accent: "184 146 87" }
+};
+
+const hexToRgbString = (hex) => {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  return `${r} ${g} ${b}`;
+};
+
+const rgbStringToHex = (rgbStr) => {
+  if (!rgbStr) return "#000000";
+  const [r, g, b] = rgbStr.split(" ").map(Number);
+  return "#" + (1 << 24 | r << 16 | g << 8 | b).toString(16).slice(1);
+};
+
+const ThemeEditor = ({ content, updateContent, saveStatus }) => {
+  const current = content.theme_colors || { primary: "90 178 187", secondary: "25 55 60", accent: "184 146 87" };
+
+  const applyPreset = (presetKey) => {
+    updateContent("theme_colors", {
+      primary: PRESET_THEMES[presetKey].primary,
+      secondary: PRESET_THEMES[presetKey].secondary,
+      accent: PRESET_THEMES[presetKey].accent
+    });
+  };
+
+  const handleColorChange = (field, hexValue) => {
+    updateContent("theme_colors", {
+      ...current,
+      [field]: hexToRgbString(hexValue)
+    });
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div>
+          <FieldLabel>Primary Color (Base)</FieldLabel>
+          <div className="flex items-center gap-4 border border-gray-100 p-2 rounded-xl bg-gray-50">
+            <input 
+              type="color" 
+              value={rgbStringToHex(current.primary)} 
+              onChange={(e) => handleColorChange("primary", e.target.value)}
+              className="w-12 h-12 rounded cursor-pointer border-0 p-0 outline-none bg-transparent"
+            />
+            <span className="text-sm font-mono text-gray-600">{rgbStringToHex(current.primary).toUpperCase()}</span>
+          </div>
+        </div>
+        <div>
+          <FieldLabel>Secondary Color (Dark)</FieldLabel>
+          <div className="flex items-center gap-4 border border-gray-100 p-2 rounded-xl bg-gray-50">
+            <input 
+              type="color" 
+              value={rgbStringToHex(current.secondary)} 
+              onChange={(e) => handleColorChange("secondary", e.target.value)}
+              className="w-12 h-12 rounded cursor-pointer border-0 p-0 outline-none bg-transparent"
+            />
+            <span className="text-sm font-mono text-gray-600">{rgbStringToHex(current.secondary).toUpperCase()}</span>
+          </div>
+        </div>
+        <div>
+          <FieldLabel>Accent Color (Highlights)</FieldLabel>
+          <div className="flex items-center gap-4 border border-gray-100 p-2 rounded-xl bg-gray-50">
+            <input 
+              type="color" 
+              value={rgbStringToHex(current.accent)} 
+              onChange={(e) => handleColorChange("accent", e.target.value)}
+              className="w-12 h-12 rounded cursor-pointer border-0 p-0 outline-none bg-transparent"
+            />
+            <span className="text-sm font-mono text-gray-600">{rgbStringToHex(current.accent).toUpperCase()}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="border-t border-gray-100 pt-5">
+        <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-4">Or Quick Apply Preset Theme</p>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
+          {Object.entries(PRESET_THEMES).map(([key, theme]) => (
+            <button key={key} onClick={() => applyPreset(key)} className="border p-4 rounded-xl flex flex-col items-center gap-2 hover:bg-gray-50 transition-colors">
+              <div className="flex w-full h-8 rounded overflow-hidden">
+                <div style={{ backgroundColor: `rgb(${theme.primary})` }} className="flex-1"></div>
+                <div style={{ backgroundColor: `rgb(${theme.secondary})` }} className="flex-1"></div>
+                <div style={{ backgroundColor: `rgb(${theme.accent})` }} className="flex-1"></div>
+              </div>
+              <span className="text-[10px] font-bold uppercase tracking-widest text-gray-500 text-center">{theme.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="flex justify-end"><SaveIndicator status={saveStatus["theme_colors"]} /></div>
+    </div>
+  );
+};
+
+const NavigationEditor = ({ content, updateContent, saveStatus }) => {
+  const links = Array.isArray(content.nav_links) ? content.nav_links : [];
+
+  const updateLink = (index, field, value) => {
+    const updated = links.map((c, i) => i === index ? { ...c, [field]: value } : c);
+    updateContent("nav_links", updated);
+  };
+
+  const addLink = () => {
+    updateContent("nav_links", [...links, { id: `nav-${Date.now()}`, label: "New Link", type: "link", path: "/" }]);
+  };
+
+  const removeLink = (index) => {
+    updateContent("nav_links", links.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div className="space-y-4">
+      {links.map((link, i) => (
+        <div key={link.id || i} className="border border-gray-100 rounded-xl p-4 bg-gray-50 space-y-3">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-xs font-bold uppercase tracking-widest text-primary">Nav Item {i + 1}</span>
+            <button onClick={() => removeLink(i)} className="text-red-400 hover:text-red-600 p-1"><Trash2 size={14} /></button>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div>
+              <FieldLabel>Label</FieldLabel>
+              <TextInput value={link.label} onChange={(v) => updateLink(i, "label", v)} />
+            </div>
+            <div>
+              <FieldLabel>Type</FieldLabel>
+              <select value={link.type} onChange={(e) => updateLink(i, "type", e.target.value)} className="w-full border border-gray-200 p-2.5 rounded-lg text-sm outline-none focus:border-primary">
+                <option value="link">Simple Link</option>
+                <option value="products_dropdown">Products Dropdown</option>
+                <option value="promotional_dropdown">Promotional Dropdown</option>
+              </select>
+            </div>
+            <div>
+              <FieldLabel>Path (URL)</FieldLabel>
+              <TextInput value={link.path || ""} onChange={(v) => updateLink(i, "path", v)} />
+            </div>
+          </div>
+        </div>
+      ))}
+      <button onClick={addLink} className="w-full border-2 border-dashed border-primary/30 text-primary py-3 rounded-xl text-xs font-bold uppercase tracking-widest hover:bg-primary/5 flex items-center justify-center gap-2"><Plus size={14} /> Add Nav Item</button>
+      <div className="flex justify-end"><SaveIndicator status={saveStatus["nav_links"]} /></div>
+    </div>
+  );
+};
+
 // ─── Site Content Tab ─────────────────────────────────────────────────────────
 
 const SiteContentTab = () => {
@@ -525,6 +674,14 @@ const SiteContentTab = () => {
 
   return (
     <div className="space-y-6">
+      <SectionCard title="Website Theme Colors" icon={Layout} accent="border-t-4 border-primary">
+        <ThemeEditor {...fieldProps} />
+      </SectionCard>
+
+      <SectionCard title="Navigation Menu" icon={Layout} accent="border-t-4 border-emerald-500">
+        <NavigationEditor {...fieldProps} />
+      </SectionCard>
+
       {/* ── Hero Section ── */}
       <SectionCard
         title="Hero Section"
@@ -921,9 +1078,9 @@ const AdminDashboard = () => {
   };
 
   const handleAddTestimonial = () => {
-    if (!newTestimonial.name || !newTestimonial.content) return;
+    if (!newTestimonial.name) return;
     addTestimonial(newTestimonial);
-    setNewTestimonial({ name: "", role: "", content: "", image_url: "" });
+    setNewTestimonial({ name: "", image_url: "" });
     setIsAddingTestimonial(false);
   };
 
@@ -1066,7 +1223,7 @@ const AdminDashboard = () => {
   const TABS = [
     { id: "collections", label: "📦 Product Collections" },
     { id: "promotional", label: "🎁 Promotional Gifts" },
-    { id: "testimonials", label: "💬 Testimonials" },
+    { id: "testimonials", label: "🤝 Trusted By (Client Logos)" },
     { id: "site_content", label: "🎨 Site Content & Images" },
     { id: "profile", label: "👤 Admin Settings" },
   ];
@@ -1503,7 +1660,7 @@ const AdminDashboard = () => {
               <div className="bg-white p-8 shadow-md border-t-4 border-highlight rounded-2xl">
                 <div className="flex justify-between items-center mb-8">
                   <h2 className="text-2xl font-serif text-primary">
-                    Manage Testimonials
+                    Manage Clients
                   </h2>
                   <button
                     onClick={() => setIsAddingTestimonial(!isAddingTestimonial)}
@@ -1521,7 +1678,7 @@ const AdminDashboard = () => {
                         <FieldLabel>Client Name</FieldLabel>
                         <input
                           type="text"
-                          placeholder="e.g. Rahul Sharma"
+                          placeholder="e.g. Acme Corp"
                           value={newTestimonial.name}
                           onChange={(e) =>
                             setNewTestimonial({
@@ -1532,45 +1689,23 @@ const AdminDashboard = () => {
                           className="w-full border p-3 rounded-lg focus:border-primary outline-none"
                         />
                       </div>
-                      <div>
-                        <FieldLabel>Client Role/Location</FieldLabel>
-                        <input
-                          type="text"
-                          placeholder="e.g. Wedding Planner"
-                          value={newTestimonial.role}
-                          onChange={(e) =>
-                            setNewTestimonial({
-                              ...newTestimonial,
-                              role: e.target.value,
-                            })
+                      <div className="flex flex-col justify-end">
+                        <ImageUpload
+                          currentImage={newTestimonial.image_url}
+                          onImageUploaded={(url) =>
+                            setNewTestimonial({ ...newTestimonial, image_url: url })
                           }
-                          className="w-full border p-3 rounded-lg focus:border-primary outline-none"
+                          label="Client Logo"
                         />
                       </div>
                     </div>
-                    <div>
-                      <FieldLabel>Testimonial Content</FieldLabel>
-                      <RichTextEditor
-                        value={newTestimonial.content}
-                        onChange={(val) =>
-                          setNewTestimonial({ ...newTestimonial, content: val })
-                        }
-                        rows={3}
-                      />
-                    </div>
-                    <ImageUpload
-                      currentImage={newTestimonial.image_url}
-                      onImageUploaded={(url) =>
-                        setNewTestimonial({ ...newTestimonial, image_url: url })
-                      }
-                      label="Client Avatar"
-                    />
+                    
                     <div className="flex justify-end pt-2">
                       <button
                         onClick={handleAddTestimonial}
                         className="bg-primary text-white px-10 py-3 rounded-full font-bold uppercase tracking-widest text-[10px] shadow-lg"
                       >
-                        Save Testimonial
+                        Save Client
                       </button>
                     </div>
                   </div>
@@ -1588,33 +1723,28 @@ const AdminDashboard = () => {
                           className="w-16 h-16 rounded-full object-cover border-2 border-highlight shadow-md"
                           alt={t.name}
                         />
-                        <div className="flex-1 space-y-2">
-                          <div className="flex justify-between items-start">
+                        <div className="flex-1 space-y-2 flex flex-col justify-center">
+                          <div className="flex justify-between items-center">
                             <div>
                               <h4 className="font-bold text-royalty uppercase tracking-widest text-sm">
                                 {t.name}
                               </h4>
-                              <p className="text-[10px] text-highlight font-bold uppercase tracking-widest leading-none">
-                                {t.role}
-                              </p>
                             </div>
                             <button
                               onClick={() => deleteTestimonial(t.id)}
                               className="text-red-400 hover:text-red-600 p-2 transition-colors"
+                              title="Delete Client"
                             >
                               <Trash2 size={18} />
                             </button>
                           </div>
-                          <p className="text-gray-600 italic font-serif text-sm">
-                            "{t.content}"
-                          </p>
                         </div>
                       </div>
                     </div>
                   ))}
                   {testimonials.length === 0 && !isAddingTestimonial && (
                     <div className="text-center py-12 text-gray-400 italic">
-                      No testimonials added yet. Share some kind words!
+                      No clients added yet. Upload their logo!
                     </div>
                   )}
                 </div>

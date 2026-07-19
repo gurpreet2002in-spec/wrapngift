@@ -8,6 +8,22 @@ export const useSiteContent = () => useContext(SiteContentContext);
 // ─── Default Fallback Content ───────────────────────────────────────────────
 // Used when Supabase is unreachable or table not set up yet
 const DEFAULTS = {
+    // Nav Links
+    nav_links: [
+        { id: '1', label: 'Home', type: 'link', path: '/' },
+        { id: '2', label: 'About', type: 'link', path: '/about' },
+        { id: '3', label: 'Products', type: 'products_dropdown', path: '' },
+        { id: '4', label: 'Promotional Gifts', type: 'promotional_dropdown', path: '' },
+        { id: '5', label: 'Contact Us', type: 'link', path: '/#contact' },
+    ],
+
+    // Theme Colors
+    theme_colors: {
+        primary: "90 178 187",
+        secondary: "25 55 60",
+        accent: "184 146 87"
+    },
+
     // Featured
     featured_section: [
         { id: 1, title: 'Curated with Love', subtitle: 'The Art of Gifting', description: 'Every hamper is a labor of love, meticulously assembled to convey your deepest emotions. We source the finest products to ensure your gift stands out.', image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop', align: 'left' },
@@ -108,6 +124,14 @@ export const SiteContentProvider = ({ children }) => {
     useEffect(() => {
         fetchContent();
     }, [fetchContent]);
+
+    useEffect(() => {
+        if (content.theme_colors) {
+            document.documentElement.style.setProperty('--color-primary', content.theme_colors.primary);
+            document.documentElement.style.setProperty('--color-secondary', content.theme_colors.secondary);
+            document.documentElement.style.setProperty('--color-accent', content.theme_colors.accent);
+        }
+    }, [content.theme_colors]);
 
     /**
      * Update a single content key both locally (optimistic) and in Supabase.
