@@ -16,7 +16,7 @@ const Contact = () => {
     }
   }, [location.state]);
 
-  const formAction = "https://formsubmit.co/ajax/gurpreet2002in@gmail.com";
+  const formAction = "https://formsubmit.co/ajax/contact@nikosh.co.in";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -150,6 +150,10 @@ const Contact = () => {
                   <h3 className="font-serif text-2xl mb-8">Send an Inquiry</h3>
 
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    {/* FormSubmit Configuration */}
+                    <input type="hidden" name="_cc" value="gurpreet2002in@gmail.com" />
+                    <input type="hidden" name="_subject" value="New Inquiry from Nikosh Website" />
+                    
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label className="block text-[10px] uppercase tracking-widest text-white/50 mb-2">
