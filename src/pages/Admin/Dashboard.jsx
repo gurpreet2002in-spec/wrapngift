@@ -940,31 +940,7 @@ const SiteContentTab = () => {
         </div>
       </SectionCard>
 
-      {/* ── Services Section ── */}
-      <SectionCard
-        title="Services / Collections Section (Homepage)"
-        icon={Gift}
-        accent="border-t-4 border-green-500"
-      >
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <ContentField
-            label="Section Title"
-            contentKey="services_section_title"
-            {...fieldProps}
-          />
-          <ContentField
-            label="Section Subtitle"
-            contentKey="services_section_subtitle"
-            {...fieldProps}
-          />
-        </div>
-        <div className="border-t border-gray-100 pt-5">
-          <p className="text-[10px] uppercase tracking-widest text-gray-400 font-bold mb-4">
-            Service Cards
-          </p>
-          <ServicesEditor {...fieldProps} />
-        </div>
-      </SectionCard>
+
 
       {/* ── About Us Page ── */}
       <SectionCard
