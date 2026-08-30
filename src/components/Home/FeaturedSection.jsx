@@ -50,23 +50,25 @@ const FeaturedSection = () => {
               <div
                 className={`p-8 md:p-12 rounded-2xl backdrop-blur-sm shadow-2xl ${index % 2 === 0 ? "bg-white/5 border border-white/10" : "bg-white/50 border border-secondary/5"}`}
               >
-                <motion.span
-                  initial={{ opacity: 0, y: 10 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="text-accent uppercase tracking-[0.4em] text-xs font-bold mb-4 block"
-                >
-                  {feature.subtitle}
-                </motion.span>
                 <motion.h2
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.2 }}
-                  className="font-serif text-4xl md:text-6xl mt-2 mb-8 leading-tight"
+                  className="font-serif text-4xl md:text-6xl mb-3 leading-tight"
                 >
                   {feature.title}
                 </motion.h2>
+                {feature.subtitle && (
+                  <motion.span
+                    initial={{ opacity: 0, y: 10 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="text-accent uppercase tracking-[0.4em] text-xs font-bold mb-6 block"
+                  >
+                    {feature.subtitle}
+                  </motion.span>
+                )}
                 <motion.p
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}

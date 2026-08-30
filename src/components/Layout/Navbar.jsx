@@ -49,8 +49,8 @@ const Navbar = () => {
         >
           <div className="bg-white p-2 rounded-xl shadow-2xl border-2 border-gray-100 transform hover:scale-105 transition-transform duration-300">
             <img
-              src="/logo.png"
-              alt="Nikosh Logo"
+              src={content.logo_url || '/logo.png'}
+              alt="Logo"
               className="h-10 md:h-14 w-auto object-contain"
             />
           </div>

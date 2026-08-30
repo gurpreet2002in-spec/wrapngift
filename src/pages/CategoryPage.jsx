@@ -40,12 +40,14 @@ const CategoryPage = () => {
         <div className="absolute inset-0 bg-primary/60" />
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center text-white max-w-2xl px-6">
-            <span className="text-accent uppercase tracking-[0.25em] text-[10px] font-bold mb-3 block">
-              {category.subtitle}
-            </span>
-            <h1 className="font-serif text-4xl md:text-6xl mb-4">
+            <h1 className="font-serif text-4xl md:text-6xl mb-3">
               {category.title}
             </h1>
+            {category.subtitle && (
+              <span className="text-accent uppercase tracking-[0.25em] text-[10px] font-bold mb-3 block">
+                {category.subtitle}
+              </span>
+            )}
             <HtmlContent
               html={category.description}
               className="text-white/90 text-sm md:text-base"

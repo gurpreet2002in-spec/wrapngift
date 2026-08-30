@@ -665,6 +665,97 @@ const NavigationEditor = ({ content, updateContent, saveStatus }) => {
   );
 };
 
+// ─── Featured Categories Editor ───────────────────────────────────────────────
+
+const FeaturedCategoriesEditor = ({ content, updateContent, saveStatus }) => {
+  const { categories } = useGifting();
+  const allCats = Object.values(categories);
+  const featured = Array.isArray(content.home_featured_categories)
+    ? content.home_featured_categories
+    : [];
+
+  const toggle = (id) => {
+    const next = featured.includes(id)
+      ? featured.filter((f) => f !== id)
+      : [...featured, id];
+    updateContent('home_featured_categories', next);
+  };
+
+  const moveUp = (id) => {
+    const idx = featured.indexOf(id);
+    if (idx <= 0) return;
+    const next = [...featured];
+    [next[idx - 1], next[idx]] = [next[idx], next[idx - 1]];
+    updateContent('home_featured_categories', next);
+  };
+
+  const moveDown = (id) => {
+    const idx = featured.indexOf(id);
+    if (idx < 0 || idx >= featured.length - 1) return;
+    const next = [...featured];
+    [next[idx], next[idx + 1]] = [next[idx + 1], next[idx]];
+    updateContent('home_featured_categories', next);
+  };
+
+  return (
+    <div className="space-y-3">
+      <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mb-3">
+        Tick categories to show on the home page. Drag arrows to reorder.
+      </p>
+      {allCats.length === 0 && (
+        <p className="text-sm text-gray-400 italic">No categories found. Add some in the Collections tab first.</p>
+      )}
+      {allCats.map((cat) => {
+        const checked = featured.includes(cat.id);
+        const idx = featured.indexOf(cat.id);
+        return (
+          <div
+            key={cat.id}
+            className={`flex items-center justify-between p-3 rounded-xl border transition-colors ${
+              checked ? 'bg-primary/5 border-primary/30' : 'bg-gray-50 border-gray-100'
+            }`}
+          >
+            <label className="flex items-center gap-3 cursor-pointer flex-1">
+              <input
+                type="checkbox"
+                checked={checked}
+                onChange={() => toggle(cat.id)}
+                className="w-4 h-4 accent-primary cursor-pointer"
+              />
+              <span className="text-sm font-semibold text-gray-700">{cat.title}</span>
+              <span className="text-[10px] text-gray-400 font-mono">/{cat.id}</span>
+            </label>
+            {checked && (
+              <div className="flex items-center gap-1 ml-3">
+                <button
+                  onClick={() => moveUp(cat.id)}
+                  disabled={idx === 0}
+                  className="p-1 rounded text-gray-400 hover:text-primary disabled:opacity-20 transition-colors"
+                  title="Move up"
+                >
+                  <ChevronUp size={14} />
+                </button>
+                <span className="text-[10px] font-bold text-primary w-4 text-center">{idx + 1}</span>
+                <button
+                  onClick={() => moveDown(cat.id)}
+                  disabled={idx === featured.length - 1}
+                  className="p-1 rounded text-gray-400 hover:text-primary disabled:opacity-20 transition-colors"
+                  title="Move down"
+                >
+                  <ChevronDown size={14} />
+                </button>
+              </div>
+            )}
+          </div>
+        );
+      })}
+      <div className="flex justify-end">
+        <SaveIndicator status={saveStatus['home_featured_categories']} />
+      </div>
+    </div>
+  );
+};
+
 // ─── Site Content Tab ─────────────────────────────────────────────────────────
 
 const SiteContentTab = () => {
@@ -674,6 +765,20 @@ const SiteContentTab = () => {
 
   return (
     <div className="space-y-6">
+      <SectionCard title="Branding & Logo" icon={ImageIcon} accent="border-t-4 border-yellow-500">
+        <ContentImageField
+          label="Site Logo"
+          contentKey="logo_url"
+          {...fieldProps}
+        />
+        <p className="text-[10px] text-gray-400 mt-1">
+          Upload the logo image used in the navigation bar across all pages.
+        </p>
+      </SectionCard>
+
+      <SectionCard title="Homepage — Featured Categories" icon={Star} accent="border-t-4 border-indigo-500">
+        <FeaturedCategoriesEditor {...fieldProps} />
+      </SectionCard>
       <SectionCard title="Website Theme Colors" icon={Layout} accent="border-t-4 border-primary">
         <ThemeEditor {...fieldProps} />
       </SectionCard>
@@ -719,13 +824,25 @@ const SiteContentTab = () => {
         />
         <div className="grid grid-cols-2 gap-4">
           <ContentField
-            label="Primary CTA Button"
+            label="Primary CTA Button Text"
             contentKey="hero_cta_primary"
             {...fieldProps}
           />
           <ContentField
-            label="Secondary CTA Button"
+            label="Primary CTA Button Link (URL)"
+            contentKey="hero_cta_primary_link"
+            {...fieldProps}
+          />
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+          <ContentField
+            label="Secondary CTA Button Text"
             contentKey="hero_cta_secondary"
+            {...fieldProps}
+          />
+          <ContentField
+            label="Secondary CTA Button Link (URL)"
+            contentKey="hero_cta_secondary_link"
             {...fieldProps}
           />
         </div>
@@ -809,6 +926,18 @@ const SiteContentTab = () => {
           contentKey="about_home_image"
           {...fieldProps}
         />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <ContentField
+            label="CTA Button Text"
+            contentKey="about_home_cta_text"
+            {...fieldProps}
+          />
+          <ContentField
+            label="CTA Button Link (URL)"
+            contentKey="about_home_cta_link"
+            {...fieldProps}
+          />
+        </div>
       </SectionCard>
 
       {/* ── Services Section ── */}

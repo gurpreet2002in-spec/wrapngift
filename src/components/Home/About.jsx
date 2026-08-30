@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import { useSiteContent } from "../../context/SiteContentContext";
 import HtmlContent from "../Common/HtmlContent";
 
@@ -81,9 +82,12 @@ const About = () => {
               </div>
             </div>
 
-            <button className="mt-8 border-b-2 border-primary text-secondary pb-1 hover:text-primary transition-colors text-sm uppercase tracking-widest font-semibold">
-              Read Our Story
-            </button>
+            <Link
+              to={content.about_home_cta_link || '/about'}
+              className="mt-8 inline-block border-b-2 border-primary text-secondary pb-1 hover:text-primary transition-colors text-sm uppercase tracking-widest font-semibold"
+            >
+              {content.about_home_cta_text || 'Read Our Story'}
+            </Link>
           </motion.div>
         </div>
       </div>

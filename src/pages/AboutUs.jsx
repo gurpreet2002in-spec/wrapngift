@@ -92,12 +92,12 @@ const AboutUs = () => {
       {/* 3. Core Values */}
       <section className="py-24 bg-white">
         <div className="container mx-auto px-6 text-center mb-16">
-          <span className="text-accent uppercase tracking-[0.3em] text-[10px] font-bold mb-3 block">
-            Why Choose Us
-          </span>
           <h2 className="font-serif text-4xl text-primary">
             {content.aboutpage_promise_title}
           </h2>
+          <span className="text-accent uppercase tracking-[0.3em] text-[10px] font-bold mt-3 block">
+            Why Choose Us
+          </span>
         </div>
         <div className="container mx-auto px-6 max-w-6xl grid grid-cols-1 md:grid-cols-3 gap-12">
           {values.map((value, i) => {

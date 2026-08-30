@@ -17,6 +17,12 @@ const DEFAULTS = {
         { id: '5', label: 'Contact Us', type: 'link', path: '/#contact' },
     ],
 
+    // Branding
+    logo_url: '/logo.png',
+
+    // Home Page — which product categories to feature (ordered)
+    home_featured_categories: ['corporate', 'wedding', 'social', 'baby'],
+
     // Theme Colors
     theme_colors: {
         primary: "90 178 187",
@@ -37,7 +43,9 @@ const DEFAULTS = {
     hero_title_line2: 'Hampers',
     hero_subtitle: 'Elevate your celebrations with hand-picked elegance. We craft memories, one thoughtfully curated hamper at a time.',
     hero_cta_primary: 'Explore Collections',
+    hero_cta_primary_link: '/category/corporate',
     hero_cta_secondary: 'Read Our Story',
+    hero_cta_secondary_link: '/about',
     hero_image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=1920&q=80',
 
     // About Home
@@ -50,6 +58,8 @@ const DEFAULTS = {
     about_home_stat2_number: '1000+',
     about_home_stat2_label: 'Happy Clients',
     about_home_image: 'https://images.unsplash.com/photo-1512413914633-b5043f4041ea?q=80&w=1000&auto=format&fit=crop',
+    about_home_cta_text: 'Read Our Story',
+    about_home_cta_link: '/about',
 
     // Services
     services_section_title: 'Our Collections',
@@ -208,11 +218,13 @@ export const SiteContentProvider = ({ children }) => {
 
 // Helper: derive which section a key belongs to
 function getSection(key) {
+    if (key === 'logo_url') return 'branding';
     if (key.startsWith('hero_')) return 'hero';
     if (key.startsWith('about_home_')) return 'about_home';
     if (key.startsWith('services_')) return 'services';
     if (key.startsWith('aboutpage_')) return 'about_page';
     if (key === 'stats') return 'stats';
     if (key.startsWith('contact_') || key.startsWith('social_')) return 'contact';
+    if (key.startsWith('theme_') || key === 'nav_links') return 'general';
     return 'general';
 }
