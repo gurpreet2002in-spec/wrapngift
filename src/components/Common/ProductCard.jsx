@@ -51,7 +51,7 @@ const ProductCard = ({ product, categoryId }) => {
       {/* Editorial Content Section */}
       <div className="p-8 flex flex-col flex-grow text-center items-center">
         <h3 className="font-serif text-2xl text-white mb-4 leading-tight tracking-wide group-hover:text-highlight transition-colors">
-          {product.title}:
+          {product.title}
         </h3>
 
         <div className="space-y-4 mb-8">
@@ -60,11 +60,7 @@ const ProductCard = ({ product, categoryId }) => {
               html={product.description}
               className="text-pearl/90 text-sm leading-relaxed italic font-serif"
             />
-          ) : (
-            <p className="text-pearl/70 text-xs uppercase tracking-[0.3em] font-bold">
-              Exclusive Collection Item
-            </p>
-          )}
+          ) : null}
         </div>
 
         <div className="mt-auto w-full space-y-6">

@@ -45,15 +45,11 @@ const PromotionalCategoryPage = () => {
             <h1 className="font-serif text-4xl md:text-6xl mb-3">
               {category.title}
             </h1>
-            {(category.subtitle) && (
-              <span className="text-accent uppercase tracking-[0.25em] text-[10px] font-bold mb-3 block">
-                {category.subtitle || "Promotional Gifts"}
-              </span>
-            )}
-            <HtmlContent
-              html={category.description}
-              className="text-white/90 text-sm md:text-base border-t border-white/20 pt-4"
-            />
+{(category.subtitle) && (
+                <span className="text-accent uppercase tracking-[0.25em] text-[10px] font-bold mb-3 block">
+                  {category.subtitle || "Promotional Gifts"}
+                </span>
+              )}
           </div>
         </div>
       </div>

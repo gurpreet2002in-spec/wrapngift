@@ -48,10 +48,6 @@ const CategoryPage = () => {
                 {category.subtitle}
               </span>
             )}
-            <HtmlContent
-              html={category.description}
-              className="text-white/90 text-sm md:text-base"
-            />
           </div>
         </div>
       </div>
