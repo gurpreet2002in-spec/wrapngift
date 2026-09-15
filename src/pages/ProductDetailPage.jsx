@@ -149,19 +149,26 @@ const ProductDetailPage = () => {
             </div>
 
             <div className="prose prose-sm text-gray-600 leading-relaxed">
-              <HtmlContent
-                html={
-                  product.description ||
-                  "An exquisitely curated hamper designed for elegance and lasting impressions."
-                }
-                className="text-lg text-gray-500 italic mb-6"
-              />
-              <p>
-                Every detail of our {product.title} has been thoughtfully
-                selected to ensure the highest standards of gifting. From the
-                bespoke packaging to the premium contents inside, this hamper is
-                perfect for those who appreciate the finer things.
-              </p>
+              {product.description ? (
+                <>
+                  <HtmlContent
+                    html={product.description}
+                    className="text-lg text-gray-500 italic mb-6"
+                  />
+                </>
+              ) : (
+                <p className="text-lg text-gray-500 italic mb-6">
+                  An exquisitely curated hamper designed for elegance and lasting impressions.
+                </p>
+              )}
+              {!product.description && (
+                <p>
+                  Every detail of our {product.title} has been thoughtfully
+                  selected to ensure the highest standards of gifting. From the
+                  bespoke packaging to the premium contents inside, this hamper is
+                  perfect for those who appreciate the finer things.
+                </p>
+              )}
             </div>
 
 
