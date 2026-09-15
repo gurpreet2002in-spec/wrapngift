@@ -32,8 +32,8 @@ const DEFAULTS = {
 
     // Featured
     featured_section: [
-        { id: 1, title: 'Curated with Love', subtitle: 'The Art of Gifting', description: 'Every hamper is a labor of love, meticulously assembled to convey your deepest emotions. We source the finest products to ensure your gift stands out.', image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop', align: 'left' },
-        { id: 2, title: 'Corporate Excellence', subtitle: 'Make a Statement', description: 'Strengthen business relationships with our premium corporate gifting solutions. elegantly packaged to reflect your brand\'s prestige.', image: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=2070&auto=format&fit=crop', align: 'right' }
+        { id: 1, title: 'Curated with Love', subtitle: 'The Art of Gifting', description: 'Every hamper is a labor of love, meticulously assembled to convey your deepest emotions. We source the finest products to ensure your gift stands out.', image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop', align: 'left', cta_text: 'Read Our Story', cta_link: '/about' },
+        { id: 2, title: 'Corporate Excellence', subtitle: 'Make a Statement', description: 'Strengthen business relationships with our premium corporate gifting solutions. elegantly packaged to reflect your brand\'s prestige.', image: 'https://images.unsplash.com/photo-1513201099705-a9746e1e201f?q=80&w=2070&auto=format&fit=crop', align: 'right', cta_text: 'Read Our Story', cta_link: '/about' }
     ],
 
     // Hero
@@ -44,8 +44,8 @@ const DEFAULTS = {
     hero_subtitle: 'Elevate your celebrations with hand-picked elegance. We craft memories, one thoughtfully curated hamper at a time.',
     hero_cta_primary: 'Explore Collections',
     hero_cta_primary_link: '/category/corporate',
-    hero_cta_secondary: 'Read Our Story',
-    hero_cta_secondary_link: '/about',
+    hero_cta_secondary: 'Contact us',
+    hero_cta_secondary_link: '/contact',
     hero_image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?w=1920&q=80',
 
     // About Home
@@ -79,6 +79,8 @@ const DEFAULTS = {
     aboutpage_vision_quote: 'At Wrap n Pack, we believe that the best gifts are those that evoke a feeling. Every ribbon tied and every product selected is done with a single purpose: to make your loved ones feel special.',
     aboutpage_vision_para: 'Born from a passion for aesthetics and a love for celebrations, Wrap n Pack was founded to fill the gap between generic gifts and truly personalized hampers. We source the finest delicacies, the most elegant accessories, and the most durable packaging to ensure that your gift is a masterpiece.',
     aboutpage_vision_image: 'https://images.unsplash.com/photo-1549465220-1a8b9238cd48?q=80&w=2040&auto=format&fit=crop',
+    aboutpage_vision_cta_text: 'Explore Our Collections',
+    aboutpage_vision_cta_link: '/#collections',
     aboutpage_promise_title: 'The Wrap n Pack Promise',
     aboutpage_values: [
         { icon: 'Heart', title: 'Curated with Love', desc: 'Every item in our hampers is hand-picked to ensure it meets our high standards of quality and emotion.' },

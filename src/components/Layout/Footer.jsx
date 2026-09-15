@@ -21,8 +21,8 @@ const Footer = () => {
           <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
             <div className="bg-white p-2 rounded-xl shadow-2xl mb-6 w-36 h-auto overflow-hidden border-2 border-white/10 group">
               <img
-                src="/logo.png"
-                alt="Nikosh Logo"
+                src={content.logo_url || '/logo.png'}
+                alt="Logo"
                 className="w-full h-auto object-contain transition-transform duration-500 group-hover:scale-110"
               />
             </div>

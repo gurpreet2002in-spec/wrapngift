@@ -78,10 +78,10 @@ const AboutUs = () => {
               />
               <div className="pt-4">
                 <Link
-                  to="/#collections"
+                  to={content.aboutpage_vision_cta_link || '/#collections'}
                   className="inline-flex items-center gap-2 text-primary uppercase tracking-widest text-xs font-bold border-b-2 border-primary pb-1 hover:text-accent hover:border-accent transition-all"
                 >
-                  Explore Our Collections <ArrowRight size={14} />
+                  {content.aboutpage_vision_cta_text || 'Explore Our Collections'} <ArrowRight size={14} />
                 </Link>
               </div>
             </div>

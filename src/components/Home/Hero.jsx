@@ -23,17 +23,16 @@ const Hero = () => {
         <img
           src={content.hero_image}
           alt="Luxury Gift"
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.3 }}
+          className="w-full h-full object-cover object-center"
         />
       </div>
 
-      {/* Dark overlay — ensures text is always readable */}
+      {/* Subtle dark overlay — ensures text is readable but shows image */}
       <div
         className="absolute inset-0 z-10"
         style={{
           background:
-            "linear-gradient(to right, rgba(var(--color-secondary),0.97) 0%, rgba(var(--color-secondary),0.85) 55%, rgba(var(--color-secondary),0.4) 100%)",
+            "linear-gradient(to right, rgba(var(--color-secondary),0.6) 0%, rgba(var(--color-secondary),0.3) 50%, rgba(var(--color-secondary),0.1) 100%)",
         }}
       />
 
@@ -110,9 +109,9 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Decorative glows */}
-      <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full animate-pulse pointer-events-none" style={{ background: "rgba(var(--color-primary),0.08)", filter: "blur(80px)" }} />
-      <div className="absolute top-20 right-40 w-64 h-64 rounded-full pointer-events-none" style={{ background: "rgba(var(--color-accent),0.05)", filter: "blur(60px)" }} />
+      {/* Subtle decorative glows */}
+      <div className="absolute bottom-20 right-20 w-96 h-96 rounded-full animate-pulse pointer-events-none" style={{ background: "rgba(var(--color-primary),0.04)", filter: "blur(80px)" }} />
+      <div className="absolute top-20 right-40 w-64 h-64 rounded-full pointer-events-none" style={{ background: "rgba(var(--color-accent),0.03)", filter: "blur(60px)" }} />
     </section>
   );
 };

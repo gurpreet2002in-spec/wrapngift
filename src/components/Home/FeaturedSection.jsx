@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
 import { useSiteContent } from "../../context/SiteContentContext";
+import HtmlContent from "../Common/HtmlContent";
 
 const FeaturedSection = () => {
   const { content } = useSiteContent();
@@ -69,21 +70,21 @@ const FeaturedSection = () => {
                     {feature.subtitle}
                   </motion.span>
                 )}
-                <motion.p
+<motion.p
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
                   className={`text-lg leading-relaxed mb-10 font-light ${index % 2 === 0 ? "text-white/70" : "text-gray-600"}`}
                 >
-                  {feature.description}
+                  <HtmlContent html={feature.description} />
                 </motion.p>
                 <Link
-                  to="/about"
+                  to={feature.cta_link || '/about'}
                   className={`inline-flex items-center gap-4 uppercase tracking-[0.3em] text-[10px] font-bold group/link transition-all
-                                    ${index % 2 === 0 ? "text-white hover:text-accent" : "text-secondary hover:text-primary"}`}
+                                        ${index % 2 === 0 ? "text-white hover:text-accent" : "text-secondary hover:text-primary"}`}
                 >
-                  Read Our Story
+                  {feature.cta_text || 'Read Our Story'}
                   <span className="w-10 h-[1px] bg-current transform origin-left group-hover/link:scale-x-150 transition-transform"></span>
                 </Link>
               </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Eye, Send } from "lucide-react";
+import HtmlContent from "./HtmlContent";
 
 const ProductCard = ({ product, categoryId }) => {
   const navigate = useNavigate();
@@ -55,20 +56,10 @@ const ProductCard = ({ product, categoryId }) => {
 
         <div className="space-y-4 mb-8">
           {product.description ? (
-            <p className="text-pearl/90 text-sm leading-relaxed italic font-serif">
-              {product.description.split(" ").map((word, i) => (
-                <span
-                  key={i}
-                  className={
-                    i % 7 === 0
-                      ? "text-highlight not-italic font-sans font-bold"
-                      : ""
-                  }
-                >
-                  {word}{" "}
-                </span>
-              ))}
-            </p>
+            <HtmlContent
+              html={product.description}
+              className="text-pearl/90 text-sm leading-relaxed italic font-serif"
+            />
           ) : (
             <p className="text-pearl/70 text-xs uppercase tracking-[0.3em] font-bold">
               Exclusive Collection Item

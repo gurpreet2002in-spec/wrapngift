@@ -334,6 +334,24 @@ const FeaturedEditor = ({ content, updateContent, saveStatus }) => {
               label=""
             />
           </div>
+          <div className="grid grid-cols-2 gap-3">
+            <div>
+              <FieldLabel>CTA Text</FieldLabel>
+              <TextInput
+                value={item.cta_text || ""}
+                onChange={(v) => updateItem(i, "cta_text", v)}
+                placeholder="Read Our Story"
+              />
+            </div>
+            <div>
+              <FieldLabel>CTA Link</FieldLabel>
+              <TextInput
+                value={item.cta_link || ""}
+                onChange={(v) => updateItem(i, "cta_link", v)}
+                placeholder="/about"
+              />
+            </div>
+          </div>
         </div>
       ))}
       <div className="flex justify-end mt-4">
@@ -994,6 +1012,16 @@ const SiteContentTab = () => {
             <ContentImageField
               label="Vision Image"
               contentKey="aboutpage_vision_image"
+              {...fieldProps}
+            />
+            <ContentField
+              label="CTA Text"
+              contentKey="aboutpage_vision_cta_text"
+              {...fieldProps}
+            />
+            <ContentField
+              label="CTA Link"
+              contentKey="aboutpage_vision_cta_link"
               {...fieldProps}
             />
           </div>
