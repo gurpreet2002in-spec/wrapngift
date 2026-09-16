@@ -14,9 +14,6 @@ const TestimonialSection = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <div className="text-center mb-16 px-4">
-          <span className="text-highlight font-bold uppercase tracking-[0.3em] text-[10px] mb-4 block">
-            Our Partners
-          </span>
           <h2 className="text-4xl md:text-5xl font-serif text-royalty">
             Trusted By
           </h2>
